@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">WallPick</string>
+    <string name="onBoarding1body">Create your custom\nwallpaper list with\nwallpapers from different domains</string>
+    <string name="onBoarding1Heading">Custom Wallpaper List</string>
+    <string name="onBoarding2Body">Shake your phone to\nchange wallpapers\non the go</string>
+</resources>
