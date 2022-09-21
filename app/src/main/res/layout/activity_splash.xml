@@ -8,7 +8,7 @@
     android:background="?attr/background_color">
 
     <TextView
-        android:id="@+id/loginHeading"
+        android:id="@+id/signUpHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/kaushan_script"
@@ -39,7 +39,7 @@
         tools:layout_editor_absoluteX="177dp"
         tools:layout_editor_absoluteY="524dp"
         android:textColor="@color/red"
-        app:layout_constraintTop_toBottomOf="@id/loginHeading"
+        app:layout_constraintTop_toBottomOf="@id/signUpHeading"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

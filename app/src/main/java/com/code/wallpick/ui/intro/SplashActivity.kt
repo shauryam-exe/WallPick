@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import com.code.wallpick.R
+import com.google.firebase.FirebaseApp
 
 class SplashActivity : AppCompatActivity() {
 
@@ -36,7 +37,7 @@ class SplashActivity : AppCompatActivity() {
         bottomAnimation = AnimationUtils.loadAnimation(this, R.anim.bottom_animaiton)
 
         image = findViewById(R.id.splashImageView)
-        head = findViewById(R.id.loginHeading)
+        head = findViewById(R.id.signUpHeading)
         body = findViewById(R.id.splashBodyTextView)
 
         image.animation = topAnimation

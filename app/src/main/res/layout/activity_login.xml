@@ -8,7 +8,7 @@
     tools:context=".ui.login.LoginActivity">
 
     <TextView
-        android:id="@+id/loginHeading"
+        android:id="@+id/signUpHeading"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/kaushan_script"
@@ -28,7 +28,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginEnd="48dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loginHeading"
+        app:layout_constraintTop_toBottomOf="@id/signUpHeading"
         app:layout_constraintEnd_toEndOf="parent"
         app:placeholderTextColor="@color/red"
         app:hintTextColor="@color/red"
@@ -84,12 +84,12 @@
             android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#20000000"
             android:hint="Password"
+            android:inputType="textPassword"
             android:paddingTop="30dp"
             android:textColor="@color/red"
-            android:textSize="18sp"
-            android:inputType="textPassword"
-            android:backgroundTint="#20000000"/>
+            android:textSize="18sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -131,31 +131,34 @@
         app:layout_constraintTop_toBottomOf="@+id/newUserTextView" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center_vertical"
-        app:layout_constraintTop_toBottomOf="@id/loginButton"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/googleLoginButton"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/loginButton">
+
         <View
             android:layout_width="120dp"
             android:layout_height="2dp"
-            android:background="@color/red"
-            />
+            android:background="@color/red" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OR"
-            android:textSize="18dp"
-            android:textColor="@color/red"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"/>
+            android:layout_marginEnd="20dp"
+            android:text="OR"
+            android:textColor="@color/red"
+            android:textSize="18dp" />
+
         <View
             android:layout_width="120dp"
             android:layout_height="2dp"
-            android:background="@color/red"/>
+            android:background="@color/red" />
     </LinearLayout>
 
     <ImageView
@@ -167,5 +170,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:visibility="invisible"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
