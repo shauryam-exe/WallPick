@@ -3,6 +3,7 @@ package com.code.wallpick.ui.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Patterns
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
@@ -95,6 +96,6 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun checkEmail(email: String): Boolean {
-        return email.isNotBlank() && email.isNotEmpty() && email.contains('@')
+        return email.isNotBlank() && email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }
