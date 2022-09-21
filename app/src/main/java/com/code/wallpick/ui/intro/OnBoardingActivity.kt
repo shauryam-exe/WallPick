@@ -15,6 +15,7 @@ import androidx.annotation.ColorInt
 import androidx.viewpager2.widget.ViewPager2
 import com.code.wallpick.R
 import com.code.wallpick.adapter.OnBoardingAdapter
+import com.code.wallpick.ui.login.LoginActivity
 
 class OnBoardingActivity : AppCompatActivity() {
 
@@ -76,8 +77,8 @@ class OnBoardingActivity : AppCompatActivity() {
             } else if (position == 1){
                 letsGetStarted.text = "Get Started"
                 letsGetStarted.setOnClickListener{
-                    //startActivity(Intent(this@OnBoardingActivity, WhoAreYou::class.java))
-                    //finish()
+                    startActivity(Intent(this@OnBoardingActivity, LoginActivity::class.java))
+                    finish()
                     Log.d("check for errors","get started button working")
                 }
             }

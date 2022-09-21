@@ -1,12 +1,10 @@
 package com.code.wallpick.ui.intro
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.util.TypedValue
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -14,8 +12,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
-import androidx.core.content.ContextCompat
-import androidx.core.os.HandlerCompat.postDelayed
 import com.code.wallpick.R
 
 class SplashActivity : AppCompatActivity() {
@@ -40,7 +36,7 @@ class SplashActivity : AppCompatActivity() {
         bottomAnimation = AnimationUtils.loadAnimation(this, R.anim.bottom_animaiton)
 
         image = findViewById(R.id.splashImageView)
-        head = findViewById(R.id.splashHeadTextView)
+        head = findViewById(R.id.loginHeading)
         body = findViewById(R.id.splashBodyTextView)
 
         image.animation = topAnimation

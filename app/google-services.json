@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "778439500595",
+    "project_id": "wallpick-8d098",
+    "storage_bucket": "wallpick-8d098.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778439500595:android:5f4e036d76f19d45e55446",
+        "android_client_info": {
+          "package_name": "com.code.wallpick"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "778439500595-fipt6lospo23f2fqlhu5gb5acqu8i2qk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBejoizK4tvBnS0Y7UEC5REqt1IeCVAeGw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "778439500595-fipt6lospo23f2fqlhu5gb5acqu8i2qk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

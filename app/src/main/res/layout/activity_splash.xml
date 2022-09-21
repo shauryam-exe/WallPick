@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashActivity"
+    tools:context=".ui.intro.SplashActivity"
     android:background="?attr/background_color">
 
     <TextView
-        android:id="@+id/splashHeadTextView"
+        android:id="@+id/loginHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/kaushan_script"
@@ -39,7 +39,7 @@
         tools:layout_editor_absoluteX="177dp"
         tools:layout_editor_absoluteY="524dp"
         android:textColor="@color/red"
-        app:layout_constraintTop_toBottomOf="@id/splashHeadTextView"
+        app:layout_constraintTop_toBottomOf="@id/loginHeading"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

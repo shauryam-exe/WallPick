@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WallPick">
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".ui.intro.OnBoardingActivity"

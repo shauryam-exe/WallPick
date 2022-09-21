@@ -3,8 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/saxen/AndroidStudioProjects/WallPick/app/src/main/res/drawable/ic_hide_password.xml" value="0.149" />
+        <entry key="..\:/Users/saxen/AndroidStudioProjects/WallPick/app/src/main/res/drawable/ic_show_password.xml" value="0.1335" />
+        <entry key="..\:/Users/saxen/AndroidStudioProjects/WallPick/app/src/main/res/drawable/round_button.xml" value="0.1335" />
         <entry key="..\:/Users/saxen/AndroidStudioProjects/WallPick/app/src/main/res/drawable/round_button_bg.xml" value="0.26614583333333336" />
-        <entry key="..\:/Users/saxen/AndroidStudioProjects/WallPick/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/Users/saxen/AndroidStudioProjects/WallPick/app/src/main/res/drawable/show_password.xml" value="0.149" />
+        <entry key="..\:/Users/saxen/AndroidStudioProjects/WallPick/app/src/main/res/drawable/show_password_selector.xml" value="0.149" />
+        <entry key="..\:/Users/saxen/AndroidStudioProjects/WallPick/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/saxen/AndroidStudioProjects/WallPick/app/src/main/res/layout/activity_main.xml" value="0.11474164133738601" />
         <entry key="..\:/Users/saxen/AndroidStudioProjects/WallPick/app/src/main/res/layout/activity_on_boarding.xml" value="0.17798913043478262" />
         <entry key="..\:/Users/saxen/AndroidStudioProjects/WallPick/app/src/main/res/layout/activity_splash.xml" value="0.264" />
