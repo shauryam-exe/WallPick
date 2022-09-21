@@ -52,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 progressBar.visibility = View.VISIBLE
                 auth.signInWithEmailAndPassword(email,password).addOnCompleteListener {
-                    progressBar.visibility = View.GONE
+                    progressBar.visibility = View.INVISIBLE
                     if (it.isComplete && it.isSuccessful) {
                         if (auth.currentUser!!.isEmailVerified) {
                             startActivity(Intent(this,HomeActivity::class.java))

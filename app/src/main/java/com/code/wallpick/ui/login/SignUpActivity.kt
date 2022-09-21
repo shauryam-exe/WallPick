@@ -3,7 +3,9 @@ package com.code.wallpick.ui.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.code.wallpick.R
@@ -18,6 +20,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var emailLayout: TextInputLayout
     private lateinit var passwordLayout: TextInputLayout
     private lateinit var confirmPasswordLayout: TextInputLayout
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +30,7 @@ class SignUpActivity : AppCompatActivity() {
         emailLayout = findViewById(R.id.emailLayout)
         passwordLayout = findViewById(R.id.passwordLayout)
         confirmPasswordLayout = findViewById(R.id.confirmPasswordLayout)
+        progressBar = findViewById(R.id.progressBar)
 
         auth = FirebaseAuth.getInstance()
 
@@ -46,9 +50,11 @@ class SignUpActivity : AppCompatActivity() {
             } else if (!checkPassword(password)) {
                 passwordLayout.error = "Password must have at least 6 characters"
             } else {
+                progressBar.visibility = View.VISIBLE
                 auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener {
                     if (it.isComplete && it.isSuccessful) {
                         auth.currentUser?.sendEmailVerification()?.addOnCompleteListener { task ->
+                            progressBar.visibility = View.INVISIBLE
                             if (task.isComplete && task.isSuccessful) {
                                 showDialog(email)
                             } else {
@@ -56,6 +62,7 @@ class SignUpActivity : AppCompatActivity() {
                             }
                         }
                     } else {
+                        progressBar.visibility = View.VISIBLE
                         Toast.makeText(this,it.exception?.message.toString(),Toast.LENGTH_SHORT).show()
                     }
                 }
