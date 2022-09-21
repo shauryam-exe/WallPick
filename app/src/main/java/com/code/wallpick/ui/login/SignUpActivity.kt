@@ -41,11 +41,12 @@ class SignUpActivity : AppCompatActivity() {
             val email = emailLayout.editText?.text.toString()
             val password = passwordLayout.editText?.text.toString()
             val confirmPassword = confirmPasswordLayout.editText?.text.toString()
+            clearError()
 
             if (name.isEmpty() || name.isBlank()) {
                 nameLayout.error = "Enter your name"
             } else if (!checkEmail(email)) {
-                emailLayout.error = "Enter correct email"
+                emailLayout.error = "Enter valid email address"
             } else if (!confirmPassword(password,confirmPassword)) {
                 confirmPasswordLayout.error = "Passwords do not match"
             } else if (!checkPassword(password)) {
@@ -69,6 +70,13 @@ class SignUpActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun clearError() {
+        nameLayout.isErrorEnabled = false
+        emailLayout.isErrorEnabled = false
+        passwordLayout.isErrorEnabled = false
+        confirmPasswordLayout.isErrorEnabled = false
     }
 
     private fun showDialog(email: String) {
