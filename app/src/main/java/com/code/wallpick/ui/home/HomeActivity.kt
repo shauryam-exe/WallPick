@@ -36,6 +36,12 @@ class HomeActivity : AppCompatActivity() {
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
+        setNavListener()
+
+
+    }
+
+    private fun setNavListener() {
         navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_account -> Toast.makeText(
@@ -43,11 +49,14 @@ class HomeActivity : AppCompatActivity() {
                     "My Account Clicked",
                     Toast.LENGTH_SHORT
                 ).show()
-                R.id.nav_logout -> Toast.makeText(
-                    this@HomeActivity,
-                    "Logout Clicked",
-                    Toast.LENGTH_SHORT
-                ).show()
+                R.id.nav_logout -> {
+                    Toast.makeText(
+                        this@HomeActivity,
+                        "Logout Clicked",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             true

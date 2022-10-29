@@ -10,15 +10,19 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.code.wallpick.R
+import com.code.wallpick.data.AuthRepositoryImpl
+import com.code.wallpick.data.AuthState
 import com.code.wallpick.ui.home.HomeActivity
+import com.code.wallpick.viewmodel.AuthViewModel
+import com.code.wallpick.viewmodel.AuthViewModelFactory
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import java.util.regex.Pattern
-import kotlin.math.sign
+import kotlinx.coroutines.flow.collect
 
 class LoginActivity : AppCompatActivity() {
 
@@ -28,6 +32,9 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var emailLayout: TextInputLayout
     private lateinit var passwordLayout: TextInputLayout
     private lateinit var progressBar: ProgressBar
+    private val viewModel by viewModels<AuthViewModel> {
+        AuthViewModelFactory(AuthRepositoryImpl(FirebaseAuth.getInstance()))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +47,37 @@ class LoginActivity : AppCompatActivity() {
         loginButton = findViewById(R.id.loginButton)
         signUpButton = findViewById(R.id.signUpTextView)
         signUpButton.setOnClickListener {
-            startActivity(Intent(this,SignUpActivity::class.java))
+            startActivity(Intent(this, SignUpActivity::class.java))
         }
 
+            viewModel.authState.observe(this) {
+                when (it) {
+                    is AuthState.Success -> {
+                        Log.d("check","Authentication Successful")
+                        startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                    }
+                    is AuthState.Failure -> {
+                        Log.d("check","Authentication Failure")
+                        Toast.makeText(this@LoginActivity,"${it.exception}",Toast.LENGTH_SHORT).show()
+                    }
+                    is AuthState.Loading -> {
+                        Log.d("check","Authentication Loading")
+                        progressBar.visibility = View.VISIBLE
+                    }
+                    else -> {}
+                }
+            }
+
+        loginButton.setOnClickListener {
+            val email = emailLayout.editText?.text.toString()
+            val password = passwordLayout.editText?.text.toString()
+            viewModel.login(email, password)
+
+        }
+
+    }
+
+    private fun initLogin() {
         loginButton.setOnClickListener {
             clearError()
             val email = emailLayout.editText?.text.toString()
@@ -54,17 +89,17 @@ class LoginActivity : AppCompatActivity() {
                 passwordLayout.errorIconDrawable = null
             } else {
                 progressBar.visibility = View.VISIBLE
-                auth.signInWithEmailAndPassword(email,password).addOnCompleteListener {
+                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                     progressBar.visibility = View.INVISIBLE
                     if (it.isComplete && it.isSuccessful) {
                         if (auth.currentUser!!.isEmailVerified) {
-                            startActivity(Intent(this,HomeActivity::class.java))
+                            startActivity(Intent(this, HomeActivity::class.java))
                             clearScreen()
                         } else {
                             emailLayout.error = "Email is not verified"
                         }
                     } else {
-                        when(it.exception) {
+                        when (it.exception) {
                             is FirebaseAuthInvalidUserException -> {
                                 emailLayout.error = "User does not exist"
                             }
@@ -91,6 +126,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkEmail(email: String): Boolean {
-        return email.isNotBlank() && email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        return email.isNotBlank() && email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email)
+            .matches()
     }
 }
