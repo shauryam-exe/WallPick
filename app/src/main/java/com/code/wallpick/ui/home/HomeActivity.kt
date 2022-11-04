@@ -5,12 +5,22 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModelProvider
 import com.code.wallpick.R
+import com.code.wallpick.api.RetrofitHelper
+import com.code.wallpick.api.WallpapersService
+import com.code.wallpick.data.WallpaperRepository
+import com.code.wallpick.viewmodel.HomeViewModel
+import com.code.wallpick.viewmodel.utils.HomeViewModelFactory
 import com.google.android.material.navigation.NavigationView
 
 class HomeActivity : AppCompatActivity() {
@@ -20,10 +30,17 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var navigationView: NavigationView
+    private lateinit var trending: LinearLayout
+    private lateinit var playlist: TextView
+
+    lateinit var viewModel: HomeViewModel
+    lateinit var selectorFragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        trending = findViewById(R.id.trending)
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -38,6 +55,20 @@ class HomeActivity : AppCompatActivity() {
         actionBarDrawerToggle.syncState()
         setNavListener()
 
+//        val wallpapersService = RetrofitHelper.getInstance().create(WallpapersService::class.java)
+//        val repo = WallpaperRepository(wallpapersService)
+//        viewModel =
+//            ViewModelProvider(this, HomeViewModelFactory(repo)).get(HomeViewModel::class.java)
+
+        trending = findViewById(R.id.trending)
+        trending.setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, TrendingFragment()).commit()
+        }
+
+//        viewModel.wallpapers.observe(this) {
+//            Log.d("pixel", it.photos[0].url)
+//        }
 
     }
 

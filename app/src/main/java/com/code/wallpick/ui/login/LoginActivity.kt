@@ -11,18 +11,16 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.code.wallpick.R
 import com.code.wallpick.data.AuthRepositoryImpl
 import com.code.wallpick.data.AuthState
 import com.code.wallpick.ui.home.HomeActivity
 import com.code.wallpick.viewmodel.AuthViewModel
-import com.code.wallpick.viewmodel.AuthViewModelFactory
+import com.code.wallpick.viewmodel.utils.AuthViewModelFactory
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import kotlinx.coroutines.flow.collect
 
 class LoginActivity : AppCompatActivity() {
 

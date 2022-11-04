@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import com.code.wallpick.R
+import com.code.wallpick.ui.home.HomeActivity
 import com.google.firebase.FirebaseApp
 
 class SplashActivity : AppCompatActivity() {
@@ -46,7 +47,7 @@ class SplashActivity : AppCompatActivity() {
 
         Handler().postDelayed({
 
-            startActivity(Intent(this@SplashActivity,OnBoardingActivity::class.java))
+            startActivity(Intent(this@SplashActivity,HomeActivity::class.java))
             this@SplashActivity.finish()
         }, splashDisplayLength)
     }
