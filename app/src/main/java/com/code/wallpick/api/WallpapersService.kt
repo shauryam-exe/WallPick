@@ -24,5 +24,5 @@ interface WallpapersService {
 
     @Headers("Authorization: 563492ad6f91700001000001c97f1bf249ea491ebb47261cff9699f6")
     @GET("/v1/curated")
-    suspend fun getCurated(): Response<PhotoList>
+    suspend fun getCurated(@Query("page")page: Int,@Query("per_page")perPage: Int): Response<PhotoList>
 }

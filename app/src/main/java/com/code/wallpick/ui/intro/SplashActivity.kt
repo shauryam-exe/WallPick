@@ -2,6 +2,7 @@ package com.code.wallpick.ui.intro
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -12,8 +13,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
+import androidx.lifecycle.ViewModelProvider
 import com.code.wallpick.R
+import com.code.wallpick.api.RetrofitHelper
+import com.code.wallpick.api.WallpapersService
+import com.code.wallpick.data.WallpaperRepository
 import com.code.wallpick.ui.home.HomeActivity
+import com.code.wallpick.ui.login.LoginActivity
+import com.code.wallpick.viewmodel.HomeViewModel
+import com.code.wallpick.viewmodel.utils.HomeViewModelFactory
 import com.google.firebase.FirebaseApp
 
 class SplashActivity : AppCompatActivity() {
@@ -47,8 +55,20 @@ class SplashActivity : AppCompatActivity() {
 
         Handler().postDelayed({
 
-            startActivity(Intent(this@SplashActivity,HomeActivity::class.java))
-            this@SplashActivity.finish()
+            val onBoarding = getSharedPreferences("onBoarding",MODE_PRIVATE)
+            val isFirstTime = onBoarding.getBoolean("firstTime",true)
+
+            if (isFirstTime) {
+                val editor = onBoarding.edit()
+                editor.putBoolean("firstTime",false)
+                editor.commit()
+
+                startActivity(Intent(this@SplashActivity, OnBoardingActivity::class.java))
+                this@SplashActivity.finish()
+            } else {
+                startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
+                this@SplashActivity.finish()
+            }
         }, splashDisplayLength)
     }
 

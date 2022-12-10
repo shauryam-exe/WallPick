@@ -10,22 +10,26 @@
         android:id="@+id/splashLayout1"
         android:visibility="visible">
 
-        <ImageView
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/introScreen1Image"
-            android:layout_width="600dp"
+            android:elevation="4dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/onboarding1"
             android:adjustViewBounds="true"
+            app:layout_constraintDimensionRatio="1:1"
+            app:lottie_rawRes="@raw/screen1"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"/>
+
 
         <TextView
             android:id="@+id/introScreen1Heading"
             android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="50dp"
             android:fontFamily="@font/kaushan_script"
             android:text="@string/onBoarding1Heading"
             android:textSize="36sp"

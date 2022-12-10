@@ -48,29 +48,34 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
 
-            viewModel.authState.observe(this) {
-                when (it) {
-                    is AuthState.Success -> {
-                        Log.d("check","Authentication Successful")
-                        startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
-                    }
-                    is AuthState.Failure -> {
-                        Log.d("check","Authentication Failure")
-                        Toast.makeText(this@LoginActivity,"${it.exception}",Toast.LENGTH_SHORT).show()
-                    }
-                    is AuthState.Loading -> {
-                        Log.d("check","Authentication Loading")
-                        progressBar.visibility = View.VISIBLE
-                    }
-                    else -> {}
-                }
-            }
+        if (auth.currentUser != null) {
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
+        }
+
+//            viewModel.authState.observe(this) {
+//                when (it) {
+//                    is AuthState.Success -> {
+//                        Log.d("check","Authentication Successful")
+//                        startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+//                    }
+//                    is AuthState.Failure -> {
+//                        Log.d("check","Authentication Failure")
+//                        Toast.makeText(this@LoginActivity,"${it.exception.message}",Toast.LENGTH_SHORT).show()
+//                    }
+//                    is AuthState.Error -> {
+//                        Toast.makeText(this@LoginActivity,"${it.error}",Toast.LENGTH_SHORT).show()
+//                    }
+//                    is AuthState.Loading -> {
+//                        Log.d("check","Authentication Loading")
+//                        progressBar.visibility = View.VISIBLE
+//                    }
+//                    else -> {}
+//                }
+//            }
 
         loginButton.setOnClickListener {
-            val email = emailLayout.editText?.text.toString()
-            val password = passwordLayout.editText?.text.toString()
-            viewModel.login(email, password)
-
+            initLogin()
         }
 
     }
@@ -92,6 +97,7 @@ class LoginActivity : AppCompatActivity() {
                     if (it.isComplete && it.isSuccessful) {
                         if (auth.currentUser!!.isEmailVerified) {
                             startActivity(Intent(this, HomeActivity::class.java))
+                            finish()
                             clearScreen()
                         } else {
                             emailLayout.error = "Email is not verified"

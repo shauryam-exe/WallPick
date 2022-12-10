@@ -1,5 +1,7 @@
 package com.code.wallpick.data.model
 
+import kotlinx.android.parcel.Parcelize
+
 data class Src(
     val landscape: String,
     val large: String,

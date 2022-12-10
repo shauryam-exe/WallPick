@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import com.code.wallpick.R
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -55,6 +56,7 @@ class SignUpActivity : AppCompatActivity() {
                 progressBar.visibility = View.VISIBLE
                 auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener {
                     if (it.isComplete && it.isSuccessful) {
+                        auth.currentUser?.updateProfile(UserProfileChangeRequest.Builder().setDisplayName(name).build())
                         auth.currentUser?.sendEmailVerification()?.addOnCompleteListener { task ->
                             progressBar.visibility = View.INVISIBLE
                             if (task.isComplete && task.isSuccessful) {

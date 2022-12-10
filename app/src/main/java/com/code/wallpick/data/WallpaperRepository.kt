@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.code.wallpick.api.WallpapersService
 import com.code.wallpick.data.model.PhotoList
+import com.google.android.gms.common.api.Api
 
 class WallpaperRepository(private val wallpapersService: WallpapersService) {
 
@@ -13,20 +14,21 @@ class WallpaperRepository(private val wallpapersService: WallpapersService) {
     val wallpapers: LiveData<PhotoList>
     get() = wallpaperLiveData
 
+    private val apiStateLiveData = MutableLiveData<ApiState>()
+
+    val apiState: LiveData<ApiState>
+    get() = apiStateLiveData
+
     suspend fun getWallpapers(wallpaperType: String) {
-        Log.d("pixel","getWallpaper Called")
-//        val result = wallpapersService.getWallpaperList(wallpaperType)
-        val result = wallpapersService.getWallpaperList("flower","portrait")
-        Log.d("pixel","${result.body()!!.photos[2].url}")
-//        if (result.body() != null) {
-//            wallpaperLiveData.postValue(result.body())
-//        }
+
     }
 
-    suspend fun getTrendingWallpapers() {
-        val result = wallpapersService.getCurated()
+    suspend fun getTrendingWallpapers(page: Int) {
+        apiStateLiveData.postValue(ApiState.Loading)
+        val result = wallpapersService.getCurated(page,41)
         if (result.body() != null) {
             wallpaperLiveData.postValue(result.body())
+            apiStateLiveData.postValue(ApiState.Success)
         }
     }
 

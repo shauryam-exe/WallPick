@@ -24,7 +24,16 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="WallPick"
+                    android:fontFamily="@font/poppins"
+                    android:textStyle="bold"
+                    android:textColor="?attr/background_color"
+                    android:textSize="24sp"/>
+            </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -47,17 +56,21 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="TRENDING"
+                    android:text="Trending"
                     android:fontFamily="@font/inter_medium"
                     android:textColor="@color/cyan"
+                    android:textSize="16sp"
                     android:padding="6dp"/>
                 <View
+                    android:id="@+id/trending_line"
                     android:layout_width="match_parent"
-                    android:layout_height="4dp"
+                    android:layout_height="3dp"
                     android:background="@color/cyan" />
+
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/playlist"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -66,16 +79,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="PLAYLISTS"
+                    android:text="Playlists"
                     android:fontFamily="@font/inter_medium"
                     android:textColor="@color/cyan"
+                    android:textSize="16sp"
                     android:padding="6dp"/>
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="4dp"
+                    android:id="@+id/playlist_line"
                     android:visibility="invisible"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
                     android:background="@color/cyan" />
+
             </LinearLayout>
+
+
+
 
         </LinearLayout>
 
@@ -96,6 +115,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_drawable_header"
         app:menu="@menu/navigation_menu"/>
 </androidx.drawerlayout.widget.DrawerLayout>

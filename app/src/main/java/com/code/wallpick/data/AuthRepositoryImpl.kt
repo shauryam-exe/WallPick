@@ -12,7 +12,11 @@ class AuthRepositoryImpl(private val firebaseAuth: FirebaseAuth) : AuthRepositor
     override suspend fun login(email: String, password: String): AuthState<FirebaseUser> {
         return try {
             val result = firebaseAuth.signInWithEmailAndPassword(email,password).await()
-            AuthState.Success(result.user!!)
+            if (result.user!!.isEmailVerified) {
+                AuthState.Success(result.user!!)
+            } else {
+                AuthState.Error("Email not verified")
+            }
         } catch (e: Exception) {
             AuthState.Failure(e)
         }

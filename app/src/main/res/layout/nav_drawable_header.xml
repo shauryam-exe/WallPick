@@ -12,14 +12,14 @@
         android:id="@+id/name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Shauryam"
+        android:text="fetching name"
         android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/email_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="saxena.shauryam@gmail.com"
+        android:text="fetching email"
         android:textSize="14sp"
         android:paddingTop="8dp"/>
 

@@ -1,5 +1,7 @@
 package com.code.wallpick.data.model
 
+import kotlinx.android.parcel.Parcelize
+
 data class Photo(
     val alt: String,
     val avg_color: String,
