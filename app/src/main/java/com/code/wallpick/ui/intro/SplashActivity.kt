@@ -2,8 +2,7 @@ package com.code.wallpick.ui.intro
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.TypedValue
@@ -13,16 +12,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
 import com.code.wallpick.R
-import com.code.wallpick.api.RetrofitHelper
-import com.code.wallpick.api.WallpapersService
-import com.code.wallpick.data.WallpaperRepository
+import com.code.wallpick.service.ShakeService
 import com.code.wallpick.ui.home.HomeActivity
-import com.code.wallpick.ui.login.LoginActivity
-import com.code.wallpick.viewmodel.HomeViewModel
-import com.code.wallpick.viewmodel.utils.HomeViewModelFactory
-import com.google.firebase.FirebaseApp
+import com.todo.shakeit.core.ShakeIt
+
 
 class SplashActivity : AppCompatActivity() {
 
@@ -40,6 +35,17 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         window.statusBarColor = getColorFromAttr(R.attr.background_color)
+
+
+        ShakeIt.init(application)
+
+        //registerReceiver(ScreenLockReceiver(), IntentFilter(Intent.ACTION_USER_PRESENT))
+        val serviceIntent = Intent(this, ShakeService::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent)
+        } else {
+            startService(serviceIntent)
+        }
 
 
         topAnimation = AnimationUtils.loadAnimation(this, R.anim.top_animation)

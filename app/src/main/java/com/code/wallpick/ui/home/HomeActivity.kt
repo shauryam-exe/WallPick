@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -25,8 +26,11 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.pedromassango.doubleclick.DoubleClick
 import com.pedromassango.doubleclick.DoubleClickListener
+import com.todo.shakeit.core.ShakeDetector
+import com.todo.shakeit.core.ShakeIt
+import com.todo.shakeit.core.ShakeListener
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), ShakeListener {
 
     private lateinit var toolbar: Toolbar
 
@@ -54,7 +58,6 @@ class HomeActivity : AppCompatActivity() {
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.title = ""
-
 
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.nav_view)
@@ -123,6 +126,11 @@ class HomeActivity : AppCompatActivity() {
             Log.d("shauryam", "$item item selected")
             true
         } else super.onOptionsItemSelected(item)
+    }
+
+    override fun onShake() {
+        Toast.makeText(this,"Shake Detected", Toast.LENGTH_SHORT).show()
+        Log.d("Shake","Shake Detected")
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
