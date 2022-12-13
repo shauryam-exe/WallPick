@@ -7,6 +7,8 @@ import android.hardware.Sensor
 import android.os.CountDownTimer
 import android.util.Log
 import android.widget.Toast
+import com.code.wallpick.service.HomeScreenReceiver
+import com.code.wallpick.service.Util
 import java.util.*
 import kotlin.math.sqrt
 
@@ -20,14 +22,19 @@ class AccelerometerSensor(context: Context) :
         val ay = values[1]
         val az = values[2]
         val acceleration = sqrt((ax * ax + ay * ay + az * az).toDouble())
-        Log.d("check position", "a = $acceleration")
+
         if (acceleration > SHAKE_THRESHOLD) {
+
             Log.d("check sensor", "Sensor is working perfectly fine!!!")
             Toast.makeText(
                 context,
                 "shake detected with acceleration: $acceleration",
                 Toast.LENGTH_SHORT
             ).show()
+
+            Util().changeWallpaper(context)
+
+            //Stopping and Restarting the timer
             this.stopListening()
             object : CountDownTimer(3000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {}
