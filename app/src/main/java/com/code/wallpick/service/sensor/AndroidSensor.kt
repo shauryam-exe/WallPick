@@ -14,6 +14,8 @@ abstract class AndroidSensor(
 ) : SensorEventListener {
     protected var onSensorValuesChanged: ((List<Float>) -> Unit)? = null
 
+    var isSensorListening: Boolean = false
+
     fun setOnSensorValuesChangedListener(listener: (List<Float>) -> Unit) {
         onSensorValuesChanged = listener
     }
@@ -32,12 +34,14 @@ abstract class AndroidSensor(
         }
         sensor?.let {
             sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_GAME)
+            isSensorListening = true
         }
     }
 
     fun stopListening() {
         if (!doesSensorExist || !::sensorManager.isInitialized) return
         sensorManager.unregisterListener(this)
+        isSensorListening = false
     }
 
     override fun onSensorChanged(event: SensorEvent?) {

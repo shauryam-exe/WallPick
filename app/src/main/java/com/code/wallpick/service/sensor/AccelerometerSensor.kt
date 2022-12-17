@@ -16,7 +16,7 @@ class AccelerometerSensor(context: Context) :
     AndroidSensor(context, PackageManager.FEATURE_SENSOR_ACCELEROMETER, Sensor.TYPE_ACCELEROMETER) {
     private val SHAKE_THRESHOLD = 30
 
-    fun detectShake(values: List<Float>) {
+    fun detectShake(values: List<Float>,playlist: String) {
         Log.d("sensor","Detect Shake calling")
         val ax = values[0]
         val ay = values[1]
@@ -32,7 +32,7 @@ class AccelerometerSensor(context: Context) :
                 Toast.LENGTH_SHORT
             ).show()
 
-            Util().changeWallpaper(context)
+            Util().changeWallpaper(context,playlist)
 
             //Stopping and Restarting the timer
             this.stopListening()

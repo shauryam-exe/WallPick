@@ -1,9 +1,13 @@
 package com.code.wallpick.adapter
 
+import android.animation.Animator
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +15,12 @@ import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.code.wallpick.R
 import com.code.wallpick.data.model.Photo
+import com.code.wallpick.viewmodel.HomeViewModel
 import com.pedromassango.doubleclick.DoubleClick
 import com.pedromassango.doubleclick.DoubleClickListener
 import kotlin.math.roundToInt
@@ -43,12 +49,17 @@ class TrendingAdapter(val context: Context, val listener: OnItemClickListener) :
     fun updateItems(images: List<Photo>) {
         val startPosition = photoList.size
         photoList.addAll(images)
-        notifyItemRangeInserted(startPosition,images.size)
+        notifyItemRangeInserted(startPosition, images.size)
+    }
+
+    fun showAnimation() {
+        Log.d("Animation", "animation running")
     }
 
 
-    inner class TrendingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnClickListener{
+    inner class TrendingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView = itemView.findViewById<ImageView>(R.id.image_view)
+        val animator = itemView.findViewById<LottieAnimationView>(R.id.save_animation)
         val cardView = itemView.findViewById<CardView>(R.id.card_view)
         //val textView = itemView.findViewById<TextView>(R.id.explore_text)
 
@@ -62,43 +73,66 @@ class TrendingAdapter(val context: Context, val listener: OnItemClickListener) :
 //                textView.visibility = View.VISIBLE
 //            } else {
             imageView.setBackgroundColor(Color.parseColor(photo.avg_color))
-                val colorDrawable = ColorDrawable(Color.parseColor(photo.avg_color))
-                colorDrawable.setBounds(0,0,photo.width,photo.height)
-                    Glide.with(imageView)
-                        .load(photo.src.portrait)
-                        .placeholder(colorDrawable)
-                        .fitCenter()
-                        .into(imageView)
+            val colorDrawable = ColorDrawable(Color.parseColor(photo.avg_color))
+            colorDrawable.setBounds(0, 0, photo.width, photo.height)
+            Glide.with(imageView)
+                .load(photo.src.portrait)
+                .placeholder(colorDrawable)
+                .fitCenter()
+                .into(imageView)
             //        textView.visibility = View.GONE
             //}
-        }
-
-        init {
-            itemView.setOnClickListener(this)
-        }
-
-        override fun onClick(v: View?) {
-            val position = adapterPosition
+            //val position = adapterPosition
             val customClick = DoubleClick(object : DoubleClickListener {
                 override fun onSingleClick(view: View?) {
+                    Log.d("Click", "Single Click")
                     listener.onSingleClick(photoList[position])
                 }
 
                 override fun onDoubleClick(view: View?) {
                     val bmp = imageView.drawable.toBitmap()
-                    listener.onDoubleClick(bmp, photoList[position])
+                    val result = listener.onDoubleClick(bmp, photoList[position])
+                    if (result) {
+                        startAnimation()
+                    } else {
+                        TODO("Put an Error animation, Not required now")
+                    }
                 }
-
             }, 300)
-            v!!.setOnClickListener(customClick)
+
+            itemView.setOnClickListener(customClick)
         }
 
+        private fun startAnimation() {
+            if (animator.visibility == View.GONE)
+                animator.visibility = View.VISIBLE
+            animator.setAnimation(R.raw.like)
+            animator.loop(false)
+            animator.playAnimation()
+
+            animator.addAnimatorListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(p0: Animator?) {
+                }
+
+                override fun onAnimationEnd(p0: Animator?) {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        animator.visibility = View.GONE
+                    },500)
+                }
+
+                override fun onAnimationCancel(p0: Animator?) {
+                }
+
+                override fun onAnimationRepeat(p0: Animator?) {
+                }
+            })
+        }
 
     }
 
-    interface OnItemClickListener{
+    interface OnItemClickListener {
         fun onSingleClick(photo: Photo)
-        fun onDoubleClick(bmp: Bitmap, photo: Photo)
+        fun onDoubleClick(bmp: Bitmap, photo: Photo): Boolean
 
     }
 }

@@ -15,21 +15,33 @@ import com.todo.shakeit.core.ShakeListener
 
 class HomeScreenReceiver : BroadcastReceiver() {
     private val TAG = "ScreenLockReceiver"
-    private val SENSOR_STOP_TIME = 30000L
+    private val SENSOR_STOP_TIME = 120000L  // 120 seconds
+
+    companion object {
+        var isSensorRunning = false
+    }
 
     override fun onReceive(context: Context, intent: Intent) {
 
-        if (intent.action.equals(Intent.ACTION_USER_PRESENT)) {
+        if (intent.action.equals(Intent.ACTION_USER_PRESENT) && !isSensorRunning) {
+
+            isSensorRunning = true
 
             val sensor = AccelerometerSensor(context)
             sensor.startListening()
             sensor.setOnSensorValuesChangedListener { values ->
-                sensor.detectShake(values)
+                sensor.detectShake(values,"Favs")
             }
 
             val handler = Handler()
             handler.postDelayed({
-                sensor.stopListening()
+                isSensorRunning = false
+
+                if (sensor.isSensorListening)
+                    sensor.stopListening()
+                else
+                    sensor.startListening()
+
                 Toast.makeText(
                     context,
                     "Sensor Stopped Finally",
@@ -42,14 +54,6 @@ class HomeScreenReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun detectShake(context: Context) {
-        ShakeDetector.registerForShakeEvent(object: ShakeListener {
-            override fun onShake() {
-                Log.d("shake","shake detected")
-                Toast.makeText(context,"Shake Detected",Toast.LENGTH_LONG).show()
-            }
-        })
-    }
 
 
 }

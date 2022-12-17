@@ -17,8 +17,8 @@ class Util {
         private var i = 0
     }
 
-    fun changeWallpaper(context: Context) {
-        val path = "/data/data/com.code.wallpick/files/Favs/"
+    fun changeWallpaper(context: Context, playlist: String = "Favs") {
+        val path = "/data/data/com.code.wallpick/files/$playlist/"
 
         val files = File(path).listFiles()
 
