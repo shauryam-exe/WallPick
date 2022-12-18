@@ -19,6 +19,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.code.wallpick.R
 import com.code.wallpick.api.RetrofitHelper
 import com.code.wallpick.api.WallpapersService
+import com.code.wallpick.data.PlaylistRepository
+import com.code.wallpick.data.PlaylistRepositoryImpl
 import com.code.wallpick.data.WallpaperRepository
 import com.code.wallpick.ui.login.LoginActivity
 import com.code.wallpick.viewmodel.HomeViewModel
@@ -95,13 +97,16 @@ class HomeActivity : AppCompatActivity(), ShakeListener {
             findViewById<View>(R.id.trending_line).visibility = View.VISIBLE
         }
 
+//        playlist.setOnClickListener {
+//            supportFragmentManager.beginTransaction()
+//                .replace(R.id.fragment_container, PlaylistsFragment())
+//                .addToBackStack(null).commit()
+//            findViewById<View>(R.id.playlist_line).visibility = View.VISIBLE
+//            findViewById<View>(R.id.trending_line).visibility = View.INVISIBLE
+//
+//        }
         playlist.setOnClickListener {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, PlaylistsFragment())
-                .addToBackStack(null).commit()
-            findViewById<View>(R.id.playlist_line).visibility = View.VISIBLE
-            findViewById<View>(R.id.trending_line).visibility = View.INVISIBLE
-
+            PlaylistRepositoryImpl().listOfPlaylists()
         }
 
 

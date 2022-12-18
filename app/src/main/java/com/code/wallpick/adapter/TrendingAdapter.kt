@@ -17,13 +17,10 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.code.wallpick.R
 import com.code.wallpick.data.model.Photo
-import com.code.wallpick.viewmodel.HomeViewModel
 import com.pedromassango.doubleclick.DoubleClick
 import com.pedromassango.doubleclick.DoubleClickListener
-import kotlin.math.roundToInt
 
 
 class TrendingAdapter(val context: Context, val listener: OnItemClickListener) :
@@ -34,7 +31,7 @@ class TrendingAdapter(val context: Context, val listener: OnItemClickListener) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrendingViewHolder {
         return TrendingViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.trending_playlist_item, parent, false)
+                .inflate(R.layout.item_trending, parent, false)
         )
     }
 

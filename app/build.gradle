@@ -57,6 +57,8 @@ dependencies {
 
     implementation 'com.github.tushardhole:shakeit:0.0.2'
 
+    implementation 'com.github.Dimezis:BlurView:version-2.0.3'
+
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
