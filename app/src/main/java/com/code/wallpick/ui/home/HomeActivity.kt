@@ -97,18 +97,13 @@ class HomeActivity : AppCompatActivity(), ShakeListener {
             findViewById<View>(R.id.trending_line).visibility = View.VISIBLE
         }
 
-//        playlist.setOnClickListener {
-//            supportFragmentManager.beginTransaction()
-//                .replace(R.id.fragment_container, PlaylistsFragment())
-//                .addToBackStack(null).commit()
-//            findViewById<View>(R.id.playlist_line).visibility = View.VISIBLE
-//            findViewById<View>(R.id.trending_line).visibility = View.INVISIBLE
-//
-//        }
         playlist.setOnClickListener {
-            PlaylistRepositoryImpl().listOfPlaylists()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, PlaylistsFragment())
+                .addToBackStack(null).commit()
+            findViewById<View>(R.id.playlist_line).visibility = View.VISIBLE
+            findViewById<View>(R.id.trending_line).visibility = View.INVISIBLE
         }
-
 
 
     }

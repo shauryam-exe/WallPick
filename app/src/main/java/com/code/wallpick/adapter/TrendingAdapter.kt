@@ -49,9 +49,6 @@ class TrendingAdapter(val context: Context, val listener: OnItemClickListener) :
         notifyItemRangeInserted(startPosition, images.size)
     }
 
-    fun showAnimation() {
-        Log.d("Animation", "animation running")
-    }
 
 
     inner class TrendingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
