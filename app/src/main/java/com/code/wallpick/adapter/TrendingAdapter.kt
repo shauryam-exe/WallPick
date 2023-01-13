@@ -59,13 +59,6 @@ class TrendingAdapter(val context: Context, val listener: OnItemClickListener) :
 
         fun setImage(photo: Photo, position: Int) {
 
-            //Log.d("adapter", "$position")
-//            if (position == 0) {
-//                Glide.with(context)
-//                    .load(R.drawable.explore)
-//                    .into(imageView)
-//                textView.visibility = View.VISIBLE
-//            } else {
             imageView.setBackgroundColor(Color.parseColor(photo.avg_color))
             val colorDrawable = ColorDrawable(Color.parseColor(photo.avg_color))
             colorDrawable.setBounds(0, 0, photo.width, photo.height)
@@ -74,9 +67,7 @@ class TrendingAdapter(val context: Context, val listener: OnItemClickListener) :
                 .placeholder(colorDrawable)
                 .fitCenter()
                 .into(imageView)
-            //        textView.visibility = View.GONE
-            //}
-            //val position = adapterPosition
+
             val customClick = DoubleClick(object : DoubleClickListener {
                 override fun onSingleClick(view: View?) {
                     Log.d("Click", "Single Click")

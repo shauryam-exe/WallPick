@@ -16,6 +16,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
 import com.code.wallpick.R
 import com.code.wallpick.api.RetrofitHelper
 import com.code.wallpick.api.WallpapersService

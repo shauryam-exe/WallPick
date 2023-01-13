@@ -3,6 +3,7 @@ package com.code.wallpick.data
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import java.io.File
 import java.io.FileOutputStream
 
@@ -26,7 +27,7 @@ class PlaylistRepositoryImpl : PlaylistRepository {
             out.flush()
             out.close()
 
-            Log.d("Thread",Thread.currentThread().name)
+            Log.d("Thread", Thread.currentThread().name)
             Log.i("Image Saving", "Image saved at $file")
         } catch (e: Exception) {
             Log.i("Image Saving", "Failed to save image.")

@@ -7,7 +7,7 @@ import com.code.wallpick.data.PlaylistRepository
 import com.code.wallpick.data.model.Playlist
 import java.io.File
 
-class PlaylistViewModel(private val repository: PlaylistRepository): ViewModel() {
+class PlaylistFragmentViewModel(private val repository: PlaylistRepository): ViewModel() {
 
     val playlistsLiveData = MutableLiveData<ArrayList<Playlist>>()
 

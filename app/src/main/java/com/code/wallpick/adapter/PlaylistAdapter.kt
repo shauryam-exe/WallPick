@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.code.wallpick.R
@@ -17,7 +16,7 @@ import eightbitlab.com.blurview.BlurView
 import eightbitlab.com.blurview.RenderScriptBlur
 import java.io.File
 
-class PlaylistAdapter(val context: Context) :
+class PlaylistAdapter(val context: Context, val clickListener: OnItemClickListener) :
     RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder>() {
 
     var playlists = ArrayList<Playlist>()
@@ -63,7 +62,15 @@ class PlaylistAdapter(val context: Context) :
             blurView.setupWith(rootView, RenderScriptBlur(context))
                 .setBlurRadius(20f)
             textView.text = playlist.name
+
+            itemView.setOnClickListener {
+                clickListener.onClick(playlist.path)
+            }
         }
+    }
+
+    interface OnItemClickListener {
+        fun onClick(filePath: String)
     }
 
 }
