@@ -15,7 +15,9 @@ interface WallpapersService {
     @GET("/v1/search")
     suspend fun getWallpaperList(
         @Query("query") wallpaperType: String,
-        @Query("orientation") orientation: String
+        @Query("orientation") orientation: String,
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int
     ): Response<PhotoList>
 
     @Headers("Authorization: 563492ad6f91700001000001c97f1bf249ea491ebb47261cff9699f6")

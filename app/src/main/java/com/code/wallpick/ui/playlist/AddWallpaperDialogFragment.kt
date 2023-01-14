@@ -66,6 +66,7 @@ class AddWallpaperDialogFragment : DialogFragment() {
         addButton.setOnClickListener {
             val intent = Intent(context,WallpaperActivity::class.java)
             intent.putExtra("collection",selectedCollection)
+            intent.putExtra("playlist","Favs")
             startActivity(intent)
         }
         addButton.isClickable = false

@@ -1,5 +1,6 @@
 package com.code.wallpick.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,6 +16,7 @@ class PlaylistActivityViewModel(private val repository: PlaylistRepository): Vie
 
     fun loadPlaylist(fileName: String) {
         val result = repository.loadPlaylist(fileName)
+        Log.d("playlist", result.size.toString())
         wallpapersLiveData.postValue(result.toCollection(ArrayList()))
     }
 

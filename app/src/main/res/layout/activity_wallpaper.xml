@@ -6,4 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.playlist.WallpaperActivity">
 
+    <com.yuyakaido.android.cardstackview.CardStackView
+        android:id="@+id/stack_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

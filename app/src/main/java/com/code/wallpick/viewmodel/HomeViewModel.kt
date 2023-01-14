@@ -3,7 +3,6 @@ package com.code.wallpick.viewmodel
 import android.graphics.Bitmap
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.code.wallpick.data.State
@@ -17,7 +16,7 @@ import java.io.FileOutputStream
 class HomeViewModel(private val repository: WallpaperRepository) : ViewModel() {
 
     val wallpapers: LiveData<PhotoList>
-        get() = repository.wallpapers
+        get() = repository.curatedWallpapers
 
     val apiState: LiveData<State>
         get() = repository.state
