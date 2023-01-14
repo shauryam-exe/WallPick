@@ -103,7 +103,7 @@ class PlaylistsFragment : Fragment(), PlaylistAdapter.OnItemClickListener {
             alertDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
             var inputText = ""
-            val button = viewInflated.findViewById<TextView>(R.id.positiveButton)
+            val button = viewInflated.findViewById<TextView>(R.id.positive_button)
             val inputLayout = viewInflated.findViewById<TextInputLayout>(R.id.inputLayout)
             val input = inputLayout.editText!!
 

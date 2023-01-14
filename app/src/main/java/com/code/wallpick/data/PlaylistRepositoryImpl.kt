@@ -36,7 +36,15 @@ class PlaylistRepositoryImpl : PlaylistRepository {
 
     override fun loadPlaylist(playlistName: String): Array<File> {
         val path = "$dir$playlistName/"
-        val playlist = File(path).listFiles()
+        val file = File(path)
+        if (!file.exists()) {
+            file.mkdir()
+        }
+
+        val playlist = file.listFiles()
+        Log.d("Playlist",playlist[0].toString())
+        Log.d("Playlist",playlistName)
+
         return playlist!!
     }
 

@@ -19,6 +19,9 @@
         android:theme="@style/Theme.WallPick"
         tools:replace="android:theme">
         <activity
+            android:name=".ui.playlist.WallpaperActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.playlist.PlaylistActivity"
             android:exported="false" />
 

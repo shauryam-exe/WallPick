@@ -64,7 +64,7 @@ class PlaylistAdapter(val context: Context, val clickListener: OnItemClickListen
             textView.text = playlist.name
 
             itemView.setOnClickListener {
-                clickListener.onClick(playlist.path)
+                clickListener.onClick(playlist.name)
             }
         }
     }
