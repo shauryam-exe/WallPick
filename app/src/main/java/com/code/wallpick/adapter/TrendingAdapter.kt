@@ -40,7 +40,7 @@ class TrendingAdapter(val context: Context, val listener: OnItemClickListener) :
     }
 
     override fun getItemCount(): Int {
-        return photoList.size - 1
+        return photoList.size
     }
 
     fun updateItems(images: List<Photo>) {

@@ -134,9 +134,9 @@ class PlaylistsFragment : Fragment(), PlaylistAdapter.OnItemClickListener {
         return false
     }
 
-    override fun onClick(filePath: String) {
+    override fun onClick(fileName: String) {
         val intent = Intent(context, PlaylistActivity::class.java)
-        intent.putExtra("file",filePath)
+        intent.putExtra("file",fileName)
         startActivity(intent)
     }
 }

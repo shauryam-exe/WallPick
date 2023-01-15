@@ -5,6 +5,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,7 @@ class PlaylistActivityAdapter(
     val listener: PlaylistActivityAdapter.OnItemClickListener
 ) : RecyclerView.Adapter<PlaylistActivityAdapter.PlaylistActivityViewHolder>() {
 
-    var photoList: ArrayList<File> = ArrayList()
+    var photoList: ArrayList<File> = arrayListOf(File(""))
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistActivityViewHolder {
         return PlaylistActivityViewHolder(
@@ -33,7 +34,7 @@ class PlaylistActivityAdapter(
     }
 
     override fun onBindViewHolder(holder: PlaylistActivityViewHolder, position: Int) {
-            holder.setImage(photoList[position], holder.adapterPosition)
+        holder.setImage(photoList[position], holder.adapterPosition)
     }
 
     override fun getItemCount(): Int {
@@ -41,9 +42,11 @@ class PlaylistActivityAdapter(
     }
 
     fun updateItems(images: List<File>) {
-        val startPosition = photoList.size
+        photoList.clear()
+        photoList.add(File("abc"))
         photoList.addAll(images)
-        notifyItemRangeInserted(startPosition, images.size)
+        notifyDataSetChanged()
+//        notifyItemRangeInserted(1, images.size)
     }
 
 

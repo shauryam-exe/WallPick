@@ -17,10 +17,8 @@ class PlaylistActivityViewModel(private val repository: PlaylistRepository): Vie
     fun loadPlaylist(fileName: String) {
         val result = repository.loadPlaylist(fileName)
         Log.d("playlist", result.size.toString())
+        wallpapersLiveData.value?.clear()
+        Log.d("playlist viewModel", wallpapersLiveData.value?.size.toString())
         wallpapersLiveData.postValue(result.toCollection(ArrayList()))
     }
-
-
-
-
 }

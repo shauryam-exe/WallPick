@@ -30,11 +30,9 @@ class PlaylistAdapter(val context: Context, val clickListener: OnItemClickListen
 
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) {
         holder.setPlaylist(position)
-        Log.d("Playlist Adapter", "Calling at $position")
     }
 
     override fun getItemCount(): Int {
-        Log.d("Playlist itemCount", "Calling at ${playlists.size}")
         return playlists.size
     }
 

@@ -42,8 +42,6 @@ class PlaylistRepositoryImpl : PlaylistRepository {
         }
 
         val playlist = file.listFiles()
-        Log.d("Playlist",playlist[0].toString())
-        Log.d("Playlist",playlistName)
 
         return playlist!!
     }

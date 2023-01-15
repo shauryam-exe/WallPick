@@ -7,15 +7,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.core.view.children
 import androidx.fragment.app.DialogFragment
 import com.code.wallpick.R
-import kotlinx.android.synthetic.main.dialog_add_playlist.*
-import org.w3c.dom.Text
 
 class AddWallpaperDialogFragment : DialogFragment() {
 
@@ -27,6 +22,7 @@ class AddWallpaperDialogFragment : DialogFragment() {
     lateinit var addButton: TextView
     lateinit var cancelButton: TextView
 
+    private lateinit var playlistName: String
     var selectedCollection: String = ""
 
     override fun onCreateView(
@@ -55,6 +51,9 @@ class AddWallpaperDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val bundle = arguments
+        playlistName = bundle!!.getString("TEXT", "")
+
         initCardClickListener()
         initButtonClickListener()
     }
@@ -66,8 +65,9 @@ class AddWallpaperDialogFragment : DialogFragment() {
         addButton.setOnClickListener {
             val intent = Intent(context,WallpaperActivity::class.java)
             intent.putExtra("collection",selectedCollection)
-            intent.putExtra("playlist","Favs")
+            intent.putExtra("playlist",playlistName)
             startActivity(intent)
+            dismiss()
         }
         addButton.isClickable = false
         addButton.isFocusable = false
