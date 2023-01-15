@@ -139,4 +139,9 @@ class PlaylistsFragment : Fragment(), PlaylistAdapter.OnItemClickListener {
         intent.putExtra("file",fileName)
         startActivity(intent)
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getListOfPlaylist()
+    }
 }

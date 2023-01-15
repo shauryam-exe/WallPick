@@ -37,9 +37,9 @@ class PlaylistAdapter(val context: Context, val clickListener: OnItemClickListen
     }
 
     fun updateList(list: ArrayList<Playlist>) {
-        val startPosition = playlists.size
+        playlists.clear()
         playlists.addAll(list)
-        notifyItemRangeInserted(startPosition, list.size)
+        notifyDataSetChanged()
     }
 
     inner class PlaylistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
