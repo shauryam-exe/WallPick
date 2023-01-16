@@ -80,7 +80,7 @@ class AddWallpaperDialogFragment : DialogFragment() {
             cardSelected(it as CardView)
         }
         amoledCard.setOnClickListener {
-            selectedCollection = "amoled"
+            selectedCollection = "black amoled"
             cardSelected(it as CardView)
         }
         animeCard.setOnClickListener {

@@ -28,6 +28,8 @@ class PlaylistActivity : AppCompatActivity(), PlaylistActivityAdapter.OnItemClic
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_playlist)
+        window.statusBarColor = getColor(R.color.dark_blue)
+
         playlist = intent.getStringExtra("file")!!
 
         toolbar = findViewById(R.id.toolbar)

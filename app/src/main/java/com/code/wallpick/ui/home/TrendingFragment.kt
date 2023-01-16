@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -33,7 +34,7 @@ class TrendingFragment : Fragment(), TrendingAdapter.OnItemClickListener {
 
     private lateinit var viewModel: HomeViewModel
     lateinit var adapter: TrendingAdapter
-    private lateinit var recyclerView: RecyclerView
+    lateinit var recyclerView: RecyclerView
     private lateinit var loading: ConstraintLayout
     var page = 1
 
@@ -59,6 +60,10 @@ class TrendingFragment : Fragment(), TrendingAdapter.OnItemClickListener {
         initLoading()
 
         initScrollListener()
+
+        requireActivity().findViewById<Toolbar>(R.id.toolbar).setOnClickListener {
+            recyclerView.smoothScrollToPosition(0)
+        }
 
     }
 

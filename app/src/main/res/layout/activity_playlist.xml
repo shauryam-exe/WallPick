@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/background_color"
     tools:context=".ui.playlist.PlaylistActivity">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -11,6 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="4dp"
+            android:backgroundTint="?attr/background_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -27,7 +29,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"
                     android:text="WallPick"
-                    android:textColor="?attr/background_color"
+                    android:textColor="?attr/text_color"
                     android:textSize="24sp"
                     android:textStyle="bold" />
             </androidx.appcompat.widget.Toolbar>
@@ -39,7 +41,7 @@
             android:id="@+id/playlist_activity_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/transparent"
+            android:backgroundTint="@color/cyan"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintTop_toBottomOf="@id/app_bar" />
 

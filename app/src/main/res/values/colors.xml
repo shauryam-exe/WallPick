@@ -11,5 +11,8 @@
     <color name="red">#E41A6A</color>
     <color name="cyan">#FF03DAC5</color>
     <color name="hint">#95E41A6A</color>
+    <color name="dark_red">#b0003a</color>
     <color name="transparent">#00000000</color>
+    <color name="unselected_color">#808080</color>
+
 </resources>

@@ -1,37 +1,35 @@
 package com.code.wallpick.ui.home
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
-import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStore
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.code.wallpick.R
+import com.code.wallpick.adapter.HomeViewPagerAdapter
 import com.code.wallpick.api.RetrofitHelper
 import com.code.wallpick.api.WallpapersService
-import com.code.wallpick.data.PlaylistRepository
-import com.code.wallpick.data.PlaylistRepositoryImpl
 import com.code.wallpick.data.WallpaperRepository
 import com.code.wallpick.ui.login.LoginActivity
 import com.code.wallpick.viewmodel.HomeViewModel
 import com.code.wallpick.viewmodel.utils.HomeViewModelFactory
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
-import com.pedromassango.doubleclick.DoubleClick
-import com.pedromassango.doubleclick.DoubleClickListener
-import com.todo.shakeit.core.ShakeDetector
-import com.todo.shakeit.core.ShakeIt
 import com.todo.shakeit.core.ShakeListener
 
 class HomeActivity : AppCompatActivity(), ShakeListener {
@@ -41,8 +39,17 @@ class HomeActivity : AppCompatActivity(), ShakeListener {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var navigationView: NavigationView
-    private lateinit var trending: LinearLayout
-    private lateinit var playlist: LinearLayout
+    private lateinit var trending: FrameLayout
+    private lateinit var playlist: FrameLayout
+    private lateinit var tabLayout: TabLayout
+    private lateinit var viewPager: ViewPager2
+
+
+
+    private lateinit var trendingText: TextView
+    private lateinit var playlistText: TextView
+    private lateinit var trendingIcon: ImageView
+    private lateinit var playlistIcon: ImageView
 
     lateinit var viewModel: HomeViewModel
     lateinit var selectorFragment: Fragment
@@ -56,8 +63,9 @@ class HomeActivity : AppCompatActivity(), ShakeListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        trending = findViewById(R.id.trending)
-        playlist = findViewById(R.id.playlist)
+        window.statusBarColor = getColor(R.color.dark_blue)
+
+        initTabLayout()
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -87,26 +95,25 @@ class HomeActivity : AppCompatActivity(), ShakeListener {
         nameText.text = auth.currentUser!!.displayName
         emailText.text = auth.currentUser!!.email
 
-
-        supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, TrendingFragment())
-            .addToBackStack(null).commit()
-
-        trending.setOnClickListener {
-            supportFragmentManager.beginTransaction().replace(R.id.fragment_container,TrendingFragment()).commit()
-            findViewById<View>(R.id.playlist_line).visibility = View.INVISIBLE
-            findViewById<View>(R.id.trending_line).visibility = View.VISIBLE
-        }
-
-        playlist.setOnClickListener {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, PlaylistsFragment())
-                .addToBackStack(null).commit()
-            findViewById<View>(R.id.playlist_line).visibility = View.VISIBLE
-            findViewById<View>(R.id.trending_line).visibility = View.INVISIBLE
-        }
+        initViewPager()
 
 
+    }
+
+    private fun initViewPager() {
+        viewPager = findViewById(R.id.home_view_pager)
+        viewPager.adapter = HomeViewPagerAdapter(this)
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            if (position == 0) {
+                tab.setIcon(R.drawable.ic_trending)
+            } else if (position == 1) {
+                tab.setIcon(R.drawable.ic_playlist)
+            }
+        }.attach()
+    }
+
+    private fun initTabLayout() {
+        tabLayout = findViewById(R.id.tabLayout)
     }
 
     private fun setNavListener() {
