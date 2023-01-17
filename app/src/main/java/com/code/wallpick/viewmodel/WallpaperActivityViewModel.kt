@@ -6,13 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.code.wallpick.data.State
-import com.code.wallpick.data.WallpaperRepository
+import com.code.wallpick.data.remote.WallpaperRepositoryImpl
 import com.code.wallpick.data.model.PhotoList
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 
-class WallpaperActivityViewModel(private val repository: WallpaperRepository): ViewModel() {
+class WallpaperActivityViewModel(private val repository: WallpaperRepositoryImpl): ViewModel() {
 
     val wallpapers: LiveData<PhotoList>
         get() = repository.wallpapers

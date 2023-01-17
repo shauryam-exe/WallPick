@@ -10,29 +10,27 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStore
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.*
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.code.wallpick.R
 import com.code.wallpick.adapter.TrendingAdapter
-import com.code.wallpick.api.RetrofitHelper
-import com.code.wallpick.api.WallpapersService
+import com.code.wallpick.data.remote.RetrofitHelper
+import com.code.wallpick.data.remote.WallpapersService
 import com.code.wallpick.data.State
-import com.code.wallpick.data.WallpaperRepository
+import com.code.wallpick.data.remote.WallpaperRepositoryImpl
 import com.code.wallpick.data.model.Photo
 import com.code.wallpick.viewmodel.HomeViewModel
 import com.code.wallpick.viewmodel.utils.HomeViewModelFactory
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream
 
-
+@AndroidEntryPoint
 class TrendingFragment : Fragment(), TrendingAdapter.OnItemClickListener {
 
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by viewModels()
     lateinit var adapter: TrendingAdapter
     lateinit var recyclerView: RecyclerView
     private lateinit var loading: ConstraintLayout
@@ -94,13 +92,13 @@ class TrendingFragment : Fragment(), TrendingAdapter.OnItemClickListener {
     }
 
     private fun initViewModel() {
-        val wallpapersService = RetrofitHelper.getInstance().create(WallpapersService::class.java)
-        val repo = WallpaperRepository(wallpapersService)
-        viewModel =
-            ViewModelProvider(
-                requireActivity(),
-                HomeViewModelFactory(repo)
-            ).get(HomeViewModel::class.java)
+//        val wallpapersService = RetrofitHelper.getInstance().create(WallpapersService::class.java)
+//        val repo = WallpaperRepositoryImpl(wallpapersService)
+//        viewModel =
+//            ViewModelProvider(
+//                requireActivity(),
+//                HomeViewModelFactory(repo)
+//            ).get(HomeViewModel::class.java)
         viewModel.wallpapers.observe(viewLifecycleOwner) {
             adapter.updateItems(it.photos)
         }

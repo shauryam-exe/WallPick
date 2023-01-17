@@ -6,14 +6,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.code.wallpick.data.State
-import com.code.wallpick.data.WallpaperRepository
+import com.code.wallpick.data.remote.WallpaperRepositoryImpl
 import com.code.wallpick.data.model.PhotoList
+import com.code.wallpick.data.remote.WallpaperRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
+import javax.inject.Inject
 
-class HomeViewModel(private val repository: WallpaperRepository) : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor (private val repository: WallpaperRepository) : ViewModel() {
 
     val wallpapers: LiveData<PhotoList>
         get() = repository.curatedWallpapers
@@ -23,8 +27,6 @@ class HomeViewModel(private val repository: WallpaperRepository) : ViewModel() {
 
     fun initTrendingWallpapers() = viewModelScope.launch(Dispatchers.IO) {
         repository.getTrendingWallpapers((0..50).random())
-        //Log.d("wall viewModel","${wallpapers.value!!.photos[0].url}")
-
     }
 
     fun loadTrendingWallpapers(page: Int) = viewModelScope.launch(Dispatchers.IO) {

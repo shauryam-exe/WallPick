@@ -1,28 +1,24 @@
 package com.code.wallpick.ui.home
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.Drawable
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
-import android.view.View
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.code.wallpick.R
 import com.code.wallpick.adapter.HomeViewPagerAdapter
-import com.code.wallpick.api.RetrofitHelper
-import com.code.wallpick.api.WallpapersService
-import com.code.wallpick.data.WallpaperRepository
+import com.code.wallpick.data.remote.RetrofitHelper
+import com.code.wallpick.data.remote.WallpapersService
+import com.code.wallpick.data.remote.WallpaperRepositoryImpl
 import com.code.wallpick.ui.login.LoginActivity
 import com.code.wallpick.viewmodel.HomeViewModel
 import com.code.wallpick.viewmodel.utils.HomeViewModelFactory
@@ -31,7 +27,9 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import com.todo.shakeit.core.ShakeListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), ShakeListener {
 
     private lateinit var toolbar: Toolbar
@@ -51,13 +49,12 @@ class HomeActivity : AppCompatActivity(), ShakeListener {
     private lateinit var trendingIcon: ImageView
     private lateinit var playlistIcon: ImageView
 
-    lateinit var viewModel: HomeViewModel
+    val viewModel: HomeViewModel by viewModels()
     lateinit var selectorFragment: Fragment
     lateinit var auth: FirebaseAuth
 
     lateinit var nameText: TextView
     lateinit var emailText: TextView
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,11 +72,12 @@ class HomeActivity : AppCompatActivity(), ShakeListener {
         navigationView = findViewById(R.id.nav_view)
         actionBarDrawerToggle =
             ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close)
+//
+//        val wallpapersService = RetrofitHelper.getInstance().create(WallpapersService::class.java)
+//        val repo = WallpaperRepositoryImpl(wallpapersService)
+//        viewModel =
+//            ViewModelProvider(this, HomeViewModelFactory(repo)).get(HomeViewModel::class.java)
 
-        val wallpapersService = RetrofitHelper.getInstance().create(WallpapersService::class.java)
-        val repo = WallpaperRepository(wallpapersService)
-        viewModel =
-            ViewModelProvider(this, HomeViewModelFactory(repo)).get(HomeViewModel::class.java)
         viewModel.initTrendingWallpapers()
 
 

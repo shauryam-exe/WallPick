@@ -7,25 +7,19 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.LinearInterpolator
-import android.widget.ImageView
-import androidx.cardview.widget.CardView
-import androidx.core.graphics.drawable.toBitmap
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.code.wallpick.R
 import com.code.wallpick.adapter.WallpaperStackAdapter
-import com.code.wallpick.api.RetrofitHelper
-import com.code.wallpick.api.WallpapersService
-import com.code.wallpick.data.WallpaperRepository
+import com.code.wallpick.data.remote.RetrofitHelper
+import com.code.wallpick.data.remote.WallpapersService
+import com.code.wallpick.data.remote.WallpaperRepositoryImpl
 import com.code.wallpick.viewmodel.WallpaperActivityViewModel
 import com.code.wallpick.viewmodel.utils.WallpaperActivityViewModelFactory
 import com.yuyakaido.android.cardstackview.*
-import kotlinx.android.synthetic.main.activity_wallpaper.*
 
 class WallpaperActivity : AppCompatActivity(), CardStackListener {
 
@@ -69,7 +63,7 @@ class WallpaperActivity : AppCompatActivity(), CardStackListener {
 
     private fun initViewModel() {
         val wallpapersService = RetrofitHelper.getInstance().create(WallpapersService::class.java)
-        val repo = WallpaperRepository(wallpapersService)
+        val repo = WallpaperRepositoryImpl(wallpapersService)
         viewModel = ViewModelProvider(this,
             WallpaperActivityViewModelFactory(repo))
             .get(WallpaperActivityViewModel::class.java)

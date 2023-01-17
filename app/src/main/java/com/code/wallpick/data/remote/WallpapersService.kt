@@ -1,4 +1,4 @@
-package com.code.wallpick.api
+package com.code.wallpick.data.remote
 
 import com.code.wallpick.data.model.Photo
 import com.code.wallpick.data.model.PhotoList

@@ -1,15 +1,15 @@
-package com.code.wallpick.data
+package com.code.wallpick.data.remote
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.code.wallpick.api.WallpapersService
+import com.code.wallpick.data.State
 import com.code.wallpick.data.model.PhotoList
 
-class WallpaperRepository(private val wallpapersService: WallpapersService) {
+class WallpaperRepositoryImpl(private val wallpapersService: WallpapersService): WallpaperRepository {
 
     private val curatedWallpaperLiveData = MutableLiveData<PhotoList>()
 
-    val curatedWallpapers: LiveData<PhotoList>
+    override val curatedWallpapers: LiveData<PhotoList>
     get() = curatedWallpaperLiveData
 
 
@@ -21,10 +21,10 @@ class WallpaperRepository(private val wallpapersService: WallpapersService) {
 
     private val stateLiveData = MutableLiveData<State>()
 
-    val state: LiveData<State>
+    override val state: LiveData<State>
         get() = stateLiveData
 
-    suspend fun getWallpapers(wallpaperType: String, page: Int) {
+    override suspend fun getWallpapers(wallpaperType: String, page: Int) {
         stateLiveData.postValue(State.Loading)
         val result = wallpapersService
             .getWallpaperList(wallpaperType,
@@ -35,7 +35,7 @@ class WallpaperRepository(private val wallpapersService: WallpapersService) {
         }
     }
 
-    suspend fun getTrendingWallpapers(page: Int) {
+    override suspend fun getTrendingWallpapers(page: Int) {
         stateLiveData.postValue(State.Loading)
         val result = wallpapersService.getCurated(page,41)
         if (result.body() != null) {
