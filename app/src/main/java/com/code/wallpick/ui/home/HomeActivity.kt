@@ -72,11 +72,6 @@ class HomeActivity : AppCompatActivity(), ShakeListener {
         navigationView = findViewById(R.id.nav_view)
         actionBarDrawerToggle =
             ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close)
-//
-//        val wallpapersService = RetrofitHelper.getInstance().create(WallpapersService::class.java)
-//        val repo = WallpaperRepositoryImpl(wallpapersService)
-//        viewModel =
-//            ViewModelProvider(this, HomeViewModelFactory(repo)).get(HomeViewModel::class.java)
 
         viewModel.initTrendingWallpapers()
 

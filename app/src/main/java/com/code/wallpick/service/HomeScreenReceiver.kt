@@ -8,6 +8,7 @@ import android.os.Handler
 import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
+import com.code.wallpick.App
 import com.code.wallpick.service.sensor.AccelerometerSensor
 import com.todo.shakeit.core.ShakeDetector
 import com.todo.shakeit.core.ShakeListener
@@ -27,10 +28,14 @@ class HomeScreenReceiver : BroadcastReceiver() {
 
             isSensorRunning = true
 
+            val sharedPrefs = context.getSharedPreferences(App.PLAYLIST,Context.MODE_PRIVATE)
+            val playlist = sharedPrefs.getString(App.HOME_PLAYLIST,App.FAVOURITE)!!
+            Log.d("playlist is", playlist)
+
             val sensor = AccelerometerSensor(context)
             sensor.startListening()
             sensor.setOnSensorValuesChangedListener { values ->
-                sensor.detectShake(values,"Favs")
+                sensor.detectShake(values,playlist)
             }
 
             val handler = Handler()

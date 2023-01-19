@@ -1,9 +1,11 @@
 package com.code.wallpick.viewmodel
 
+import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.code.wallpick.App
 import com.code.wallpick.data.PlaylistRepository
 import java.io.File
 

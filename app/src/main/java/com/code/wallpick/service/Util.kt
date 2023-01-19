@@ -14,7 +14,7 @@ import java.io.FileNotFoundException
 class Util {
 
     companion object {
-        private var i = 0
+        private var i = 1
     }
 
     fun changeWallpaper(context: Context, playlist: String = "Favs") {
@@ -36,7 +36,6 @@ class Util {
         }
 
         try {
-            //val child = "14559395.jpg"
             val file = File(child)
             val bitmap = BitmapFactory.decodeStream(FileInputStream(file))
             Log.d("Read",child)
