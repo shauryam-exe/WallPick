@@ -1,9 +1,12 @@
 package com.code.wallpick.ui.home
 
 import android.content.Intent
+import android.content.SharedPreferences
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Display
 import android.view.MenuItem
 import android.widget.*
 import androidx.activity.viewModels
@@ -14,11 +17,13 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
+import com.code.wallpick.App
 import com.code.wallpick.R
 import com.code.wallpick.adapter.HomeViewPagerAdapter
 import com.code.wallpick.data.remote.RetrofitHelper
 import com.code.wallpick.data.remote.WallpapersService
 import com.code.wallpick.data.remote.WallpaperRepositoryImpl
+import com.code.wallpick.service.ShakeService
 import com.code.wallpick.ui.login.LoginActivity
 import com.code.wallpick.viewmodel.HomeViewModel
 import com.code.wallpick.viewmodel.utils.HomeViewModelFactory
@@ -28,6 +33,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import com.todo.shakeit.core.ShakeListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_login.*
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), ShakeListener {
@@ -56,9 +62,14 @@ class HomeActivity : AppCompatActivity(), ShakeListener {
     lateinit var nameText: TextView
     lateinit var emailText: TextView
 
+    private lateinit var sharedPrefs : SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        sharedPrefs  = getSharedPreferences(App.PREFERENCES, MODE_PRIVATE)
+
 
         window.statusBarColor = getColor(R.color.dark_blue)
 
@@ -76,10 +87,7 @@ class HomeActivity : AppCompatActivity(), ShakeListener {
         viewModel.initTrendingWallpapers()
 
 
-        drawerLayout.addDrawerListener(actionBarDrawerToggle)
-        actionBarDrawerToggle.syncState()
-        setNavListener()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        initNavLayout()
 
         val headerView = navigationView.getHeaderView(0)
         nameText = headerView.findViewById(R.id.name_text)
@@ -91,6 +99,18 @@ class HomeActivity : AppCompatActivity(), ShakeListener {
         initViewPager()
 
 
+    }
+
+    private fun initNavLayout() {
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.syncState()
+
+        if (sharedPrefs.getBoolean(App.SHAKE_SERVICE,false)) {
+            navigationView.setCheckedItem(R.id.shake_wallpaper)
+        }
+
+        setNavListener()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun initViewPager() {
@@ -117,9 +137,39 @@ class HomeActivity : AppCompatActivity(), ShakeListener {
                     startActivity(Intent(this,LoginActivity::class.java))
                     finish()
                 }
+                R.id.shake_wallpaper -> {
+                    if (item.isChecked) {
+                        item.isChecked = false
+                        val editor = sharedPrefs.edit()
+                        editor.putBoolean(App.SHAKE_SERVICE, false)
+                        editor.apply()
+                        unregisterService()
+                    } else {
+                        item.isChecked = true
+                        registerService()
+                        val editor = sharedPrefs.edit()
+                        editor.putBoolean(App.SHAKE_SERVICE, true)
+                        editor.apply()
+                    }
+                }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             true
+        }
+    }
+
+    private fun unregisterService() {
+        val serviceIntent = Intent(this, ShakeService::class.java)
+        stopService(serviceIntent)
+    }
+
+    private fun registerService() {
+        //registerReceiver(ScreenLockReceiver(), IntentFilter(Intent.ACTION_USER_PRESENT))
+        val serviceIntent = Intent(this, ShakeService::class.java)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent)
+        } else {
+            startService(serviceIntent)
         }
     }
 

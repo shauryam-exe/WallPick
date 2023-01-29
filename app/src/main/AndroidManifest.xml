@@ -31,13 +31,13 @@
             android:enabled="true"
             android:exported="true" />
 
-        <receiver
-            android:name=".service.HomeScreenReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-        </receiver>
+<!--        <receiver-->
+<!--            android:name=".service.HomeScreenReceiver"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.USER_PRESENT" />-->
+<!--            </intent-filter>-->
+<!--        </receiver>-->
 
         <activity
             android:name=".ui.home.LoadWallpaperActivity"

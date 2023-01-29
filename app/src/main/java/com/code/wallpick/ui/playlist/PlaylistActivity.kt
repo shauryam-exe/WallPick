@@ -5,6 +5,8 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -20,7 +22,6 @@ import com.code.wallpick.adapter.PlaylistActivityAdapter
 import com.code.wallpick.data.PlaylistRepositoryImpl
 import com.code.wallpick.viewmodel.PlaylistActivityViewModel
 import com.code.wallpick.viewmodel.utils.PlaylistActivityViewModelFactory
-import java.io.File
 import java.io.FileInputStream
 
 class PlaylistActivity : AppCompatActivity(), PlaylistActivityAdapter.OnItemClickListener {
@@ -48,9 +49,14 @@ class PlaylistActivity : AppCompatActivity(), PlaylistActivityAdapter.OnItemClic
 
         addWallpaperDialog = AddWallpaperDialogFragment()
 
+        adapter = PlaylistActivityAdapter(this, this)
+
         initRecyclerView()
         initViewModel()
 
+        Handler(Looper.getMainLooper()).postDelayed({
+            initRecyclerView()
+        }, 60)
 
         viewModel.loadPlaylist(playlist)
         viewModel.wallpapers.observe(this) {
@@ -60,10 +66,11 @@ class PlaylistActivity : AppCompatActivity(), PlaylistActivityAdapter.OnItemClic
 
     private fun initRecyclerView() {
         recyclerView = findViewById(R.id.playlist_activity_recycler_view)
-        adapter = PlaylistActivityAdapter(this,this)
-        val layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
-        recyclerView.adapter = adapter
+        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = adapter
+
+
     }
 
     private fun initViewModel() {
@@ -73,18 +80,17 @@ class PlaylistActivity : AppCompatActivity(), PlaylistActivityAdapter.OnItemClic
             this,
             PlaylistActivityViewModelFactory(repo)
         ).get(PlaylistActivityViewModel::class.java)
-
     }
 
     override fun onClick() {
-        TODO("Not yet implemented")
+
     }
 
     override fun onAddClick() {
         val bundle = Bundle()
         bundle.putString("TEXT", playlist)
         addWallpaperDialog.arguments = bundle
-        addWallpaperDialog.show(supportFragmentManager,AddWallpaperDialogFragment.TAG)
+        addWallpaperDialog.show(supportFragmentManager, AddWallpaperDialogFragment.TAG)
     }
 
     override fun onResume() {
@@ -93,12 +99,12 @@ class PlaylistActivity : AppCompatActivity(), PlaylistActivityAdapter.OnItemClic
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.playlist_menu,menu)
+        menuInflater.inflate(R.menu.playlist_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.home_wallpaper -> {
                 setAsHomeWallpaper()
             }
@@ -110,8 +116,8 @@ class PlaylistActivity : AppCompatActivity(), PlaylistActivityAdapter.OnItemClic
     }
 
     private fun setAsLockWallpaper() {
-        val sharedPrefs = getSharedPreferences(App.PLAYLIST,Context.MODE_PRIVATE).edit()
-        sharedPrefs.putString(App.LOCK_PLAYLIST,playlist)
+        val sharedPrefs = getSharedPreferences(App.PREFERENCES, Context.MODE_PRIVATE).edit()
+        sharedPrefs.putString(App.LOCK_PLAYLIST, playlist)
         sharedPrefs.apply()
         if (viewModel.wallpapers.value?.size != 0) {
             val file = viewModel.wallpapers.value!![0]
@@ -126,8 +132,8 @@ class PlaylistActivity : AppCompatActivity(), PlaylistActivityAdapter.OnItemClic
     }
 
     private fun setAsHomeWallpaper() {
-        val sharedPrefs = getSharedPreferences(App.PLAYLIST,Context.MODE_PRIVATE).edit()
-        sharedPrefs.putString(App.HOME_PLAYLIST,playlist)
+        val sharedPrefs = getSharedPreferences(App.PREFERENCES, Context.MODE_PRIVATE).edit()
+        sharedPrefs.putString(App.HOME_PLAYLIST, playlist)
         sharedPrefs.apply()
         if (viewModel.wallpapers.value?.size != 0) {
             val file = viewModel.wallpapers.value!![0]

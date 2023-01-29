@@ -6,6 +6,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.util.Log
 
 abstract class AndroidSensor(
     protected val context: Context,
@@ -32,6 +33,7 @@ abstract class AndroidSensor(
             sensorManager = context.getSystemService(SensorManager::class.java) as SensorManager
             sensor = sensorManager.getDefaultSensor(sensorType)
         }
+        Log.d("Sensor","sensor registered")
         sensor?.let {
             sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_GAME)
             isSensorListening = true

@@ -36,7 +36,7 @@ class AccelerometerSensor(context: Context) :
 
             //Stopping and Restarting the timer
             this.stopListening()
-            object : CountDownTimer(3000, 1000) {
+            object : CountDownTimer(1500, 1000) {
                 override fun onTick(millisUntilFinished: Long) {}
 
                 override fun onFinish() {

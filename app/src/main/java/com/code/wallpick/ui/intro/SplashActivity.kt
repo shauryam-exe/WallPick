@@ -39,13 +39,6 @@ class SplashActivity : AppCompatActivity() {
 
         ShakeIt.init(application)
 
-        //registerReceiver(ScreenLockReceiver(), IntentFilter(Intent.ACTION_USER_PRESENT))
-        val serviceIntent = Intent(this, ShakeService::class.java)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(serviceIntent)
-        } else {
-            startService(serviceIntent)
-        }
 
 
         topAnimation = AnimationUtils.loadAnimation(this, R.anim.top_animation)

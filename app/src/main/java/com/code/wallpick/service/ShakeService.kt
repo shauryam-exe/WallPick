@@ -4,20 +4,22 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
-import com.todo.shakeit.core.ShakeDetector
-import com.todo.shakeit.core.ShakeListener
+import com.code.wallpick.App
+import com.code.wallpick.service.sensor.AccelerometerSensor
 
 
 class ShakeService : Service() {
+
+    private val sensor = AccelerometerSensor(this)
+    private val broadcastReceiver = HomeScreenReceiver(sensor)
+
     override fun onCreate() {
         super.onCreate()
 
@@ -37,9 +39,24 @@ class ShakeService : Service() {
             startForeground(1, notification)
         }
 
-        registerReceiver(HomeScreenReceiver(), IntentFilter(Intent.ACTION_USER_PRESENT))
+//      LocalBroadcastManager.getInstance(this).registerReceiver(HomeScreenReceiver(), IntentFilter(Intent.ACTION_USER_PRESENT))
+        detectingShake()
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(Intent.ACTION_USER_PRESENT)
+        intentFilter.addAction(Intent.ACTION_SCREEN_OFF)
+        registerReceiver(broadcastReceiver, intentFilter)
+
 
         Log.d("Service","Service Started!")
+    }
+
+    private fun detectingShake() {
+        val sharedPrefs = getSharedPreferences(App.PREFERENCES, Context.MODE_PRIVATE)
+        val playlist = sharedPrefs.getString(App.HOME_PLAYLIST, App.FAVOURITE)!!
+        sensor.startListening()
+        sensor.setOnSensorValuesChangedListener { values ->
+            sensor.detectShake(values, playlist)
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -48,14 +65,26 @@ class ShakeService : Service() {
     }
 
     override fun onDestroy() {
-        val  restart=Intent(applicationContext,this.javaClass);
-        restart.setPackage(packageName);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(restart)
+        Log.d("Service","On Destroy Called")
+        val sharedPrefs = getSharedPreferences(App.PREFERENCES, MODE_PRIVATE)
+
+        if (sharedPrefs.getBoolean(App.SHAKE_SERVICE,false)) {
+            val restart = Intent(applicationContext, this.javaClass);
+            restart.setPackage(packageName);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(restart)
+            } else {
+                startService(restart)
+            }
         } else {
-            startService(restart)
+            unregisterReceiver(broadcastReceiver)
+            broadcastReceiver.stopSensor()
         }
         super.onDestroy()
+    }
+
+    override fun stopService(name: Intent?): Boolean {
+        return super.stopService(name)
     }
 
     override fun onBind(p0: Intent?): IBinder? {
