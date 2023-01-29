@@ -18,7 +18,8 @@ import com.code.wallpick.service.sensor.AccelerometerSensor
 class ShakeService : Service() {
 
     private val sensor = AccelerometerSensor(this)
-    private val broadcastReceiver = HomeScreenReceiver(sensor)
+    private val homeScreenReceiver = HomeScreenReceiver(sensor)
+    private val lockScreenReceiver = LockScreenReceiver()
 
     override fun onCreate() {
         super.onCreate()
@@ -41,13 +42,25 @@ class ShakeService : Service() {
 
 //      LocalBroadcastManager.getInstance(this).registerReceiver(HomeScreenReceiver(), IntentFilter(Intent.ACTION_USER_PRESENT))
         detectingShake()
-        val intentFilter = IntentFilter()
-        intentFilter.addAction(Intent.ACTION_USER_PRESENT)
-        intentFilter.addAction(Intent.ACTION_SCREEN_OFF)
-        registerReceiver(broadcastReceiver, intentFilter)
+        initHomeReceiver()
+
+        initLockReceiver()
 
 
         Log.d("Service","Service Started!")
+    }
+
+    private fun initLockReceiver() {
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(Intent.ACTION_SCREEN_ON)
+        registerReceiver(lockScreenReceiver,intentFilter)
+    }
+
+    private fun initHomeReceiver() {
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(Intent.ACTION_USER_PRESENT)
+        intentFilter.addAction(Intent.ACTION_SCREEN_OFF)
+        registerReceiver(homeScreenReceiver,intentFilter)
     }
 
     private fun detectingShake() {
@@ -77,8 +90,9 @@ class ShakeService : Service() {
                 startService(restart)
             }
         } else {
-            unregisterReceiver(broadcastReceiver)
-            broadcastReceiver.stopSensor()
+            unregisterReceiver(lockScreenReceiver)
+            unregisterReceiver(homeScreenReceiver)
+            homeScreenReceiver.stopSensor()
         }
         super.onDestroy()
     }

@@ -1,5 +1,6 @@
 package com.code.wallpick
 
+import android.annotation.SuppressLint
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
@@ -13,5 +14,7 @@ class App: Application() {
         const val LOCK_PLAYLIST = "lockPlaylist"
         const val FAVOURITE = "Favs"
 
+        @SuppressLint("SdCardPath")
+        const val PATH = "/data/data/com.code.wallpick/files/saved/"
     }
 }

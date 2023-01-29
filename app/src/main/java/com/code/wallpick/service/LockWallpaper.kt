@@ -1,24 +1,24 @@
 package com.code.wallpick.service
 
-import android.R
 import android.app.WallpaperManager
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.util.Log
+import com.code.wallpick.App
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException
+import java.util.concurrent.locks.Lock
 
-
-class Util {
+class LockWallpaper {
 
     companion object {
         private var i = 1
     }
 
     fun changeWallpaper(context: Context, playlist: String = "Favs") {
-        val path = "/data/data/com.code.wallpick/files/$playlist/"
+        val path = "${App.PATH}$playlist/"
 
         val files = File(path).listFiles()
 
@@ -28,11 +28,11 @@ class Util {
             Log.d("Reads",s.path)
         }
 
-        if (i < files.size) {
-            child = files!![i++].path
+        if (LockWallpaper.i < files.size) {
+            child = files!![LockWallpaper.i++].path
         } else {
-            i = 0
-            child = files!![i++].path
+            LockWallpaper.i = 0
+            child = files!![LockWallpaper.i++].path
         }
 
         try {
@@ -42,7 +42,7 @@ class Util {
 
             val wallpaperManager = WallpaperManager.getInstance(context)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_SYSTEM)
+                wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK   )
             } else {
                 wallpaperManager.setBitmap(bitmap)
             }
@@ -53,5 +53,4 @@ class Util {
         }
 
     }
-
 }

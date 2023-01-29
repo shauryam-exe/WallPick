@@ -30,7 +30,6 @@ class HomeScreenReceiver(val sensor: AccelerometerSensor) : BroadcastReceiver() 
             val sharedPrefs = context.getSharedPreferences(App.PREFERENCES, Context.MODE_PRIVATE)
             val playlist = sharedPrefs.getString(App.HOME_PLAYLIST, App.FAVOURITE)!!
 
-            //sensor = AccelerometerSensor(context)
             sensor.startListening()
             sensor.setOnSensorValuesChangedListener { values ->
                 sensor.detectShake(values, playlist)

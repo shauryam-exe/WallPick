@@ -2,14 +2,11 @@ package com.code.wallpick.service.sensor
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.hardware.Sensor
 import android.os.CountDownTimer
 import android.util.Log
 import android.widget.Toast
-import com.code.wallpick.service.HomeScreenReceiver
-import com.code.wallpick.service.Util
-import java.util.*
+import com.code.wallpick.service.HomeWallpaper
 import kotlin.math.sqrt
 
 class AccelerometerSensor(context: Context) :
@@ -32,7 +29,7 @@ class AccelerometerSensor(context: Context) :
                 Toast.LENGTH_SHORT
             ).show()
 
-            Util().changeWallpaper(context,playlist)
+            HomeWallpaper().changeWallpaper(context,playlist)
 
             //Stopping and Restarting the timer
             this.stopListening()

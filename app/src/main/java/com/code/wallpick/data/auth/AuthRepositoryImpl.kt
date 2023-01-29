@@ -1,5 +1,6 @@
-package com.code.wallpick.data
+package com.code.wallpick.data.auth
 
+import com.code.wallpick.data.auth.AuthRepository
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

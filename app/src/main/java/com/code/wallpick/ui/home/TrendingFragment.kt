@@ -11,18 +11,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.*
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
+import com.code.wallpick.App
 import com.code.wallpick.R
 import com.code.wallpick.adapter.TrendingAdapter
-import com.code.wallpick.data.remote.RetrofitHelper
-import com.code.wallpick.data.remote.WallpapersService
-import com.code.wallpick.data.State
-import com.code.wallpick.data.remote.WallpaperRepositoryImpl
+import com.code.wallpick.data.remote.State
 import com.code.wallpick.data.model.Photo
 import com.code.wallpick.viewmodel.HomeViewModel
-import com.code.wallpick.viewmodel.utils.HomeViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.FileOutputStream
@@ -141,29 +137,9 @@ class TrendingFragment : Fragment(), TrendingAdapter.OnItemClickListener {
     }
 
     override fun onDoubleClick(bmp: Bitmap, photo: Photo): Boolean {
-        Log.d("doubleClick", "Double Click Working")
-        val dir = requireActivity().filesDir
-
+        val dir = File(App.PATH)
         val result = viewModel.saveImage("Favs", bmp, photo.id.toString(), dir)
         return result
-    }
-
-    private fun saveImage(folder: String, bmp: Bitmap, name: String, filesDir: File) {
-        try {
-            val time = System.currentTimeMillis()
-            var file = File(filesDir, folder)
-            if (!file.exists()) {
-                file.mkdir()
-            }
-            file = File(file, "$name.jpg")
-            val out = FileOutputStream(file)
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, out)
-            out.flush()
-            out.close()
-            Log.i("Image Saving", "Image saved at $file")
-        } catch (e: Exception) {
-            Log.i("Image Saving", "Failed to save image.")
-        }
     }
 
 }

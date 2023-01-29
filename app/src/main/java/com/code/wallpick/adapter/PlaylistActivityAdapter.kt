@@ -109,6 +109,9 @@ class PlaylistActivityAdapter(
             Glide.with(context)
                 .load(R.drawable.add_icon_image)
                 .into(imageView)
+            cardView.setOnClickListener {
+                listener.onAddClick()
+            }
         }
     }
 

@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.code.wallpick.data.AuthRepository
-import com.code.wallpick.data.AuthState
+import com.code.wallpick.data.auth.AuthRepository
+import com.code.wallpick.data.auth.AuthState
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch

@@ -1,9 +1,10 @@
-package com.code.wallpick.data
+package com.code.wallpick.data.local
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
+import com.code.wallpick.App
+import com.code.wallpick.data.local.PlaylistRepository
 import java.io.File
 import java.io.FileOutputStream
 
@@ -11,7 +12,7 @@ class PlaylistRepositoryImpl : PlaylistRepository {
 
 
     @SuppressLint("SdCardPath")
-    private val dir = "/data/data/com.code.wallpick/files/"
+    private val dir = App.PATH
 
 
     override fun saveWallpaper(folder: String, bmp: Bitmap, name: String, filesDir: File) {

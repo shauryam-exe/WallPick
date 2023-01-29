@@ -1,7 +1,6 @@
 package com.code.wallpick.data.remote
 
 import androidx.lifecycle.LiveData
-import com.code.wallpick.data.State
 import com.code.wallpick.data.model.PhotoList
 
 interface WallpaperRepository {

@@ -1,4 +1,4 @@
-package com.code.wallpick.data
+package com.code.wallpick.data.auth
 
 import com.google.firebase.auth.FirebaseUser
 

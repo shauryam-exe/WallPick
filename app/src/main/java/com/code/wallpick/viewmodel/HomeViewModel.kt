@@ -5,8 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.code.wallpick.data.State
-import com.code.wallpick.data.remote.WallpaperRepositoryImpl
+import com.code.wallpick.data.remote.State
 import com.code.wallpick.data.model.PhotoList
 import com.code.wallpick.data.remote.WallpaperRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -47,7 +46,7 @@ class HomeViewModel @Inject constructor (private val repository: WallpaperReposi
                 out.close()
 
                 Log.d("Thread",Thread.currentThread().name)
-                Log.i("Image Saving", "Image saved at $file")
+                Log.d("Image Saving", "Image saved at $file")
                 return true
             } catch (e: Exception) {
                 Log.i("Image Saving", "Failed to save image.")

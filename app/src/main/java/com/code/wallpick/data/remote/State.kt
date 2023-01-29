@@ -1,4 +1,4 @@
-package com.code.wallpick.data
+package com.code.wallpick.data.remote
 
 sealed class State {
     object Success: State()

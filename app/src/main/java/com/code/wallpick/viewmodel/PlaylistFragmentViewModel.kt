@@ -3,7 +3,7 @@ package com.code.wallpick.viewmodel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.code.wallpick.data.PlaylistRepository
+import com.code.wallpick.data.local.PlaylistRepository
 import com.code.wallpick.data.model.Playlist
 import java.io.File
 

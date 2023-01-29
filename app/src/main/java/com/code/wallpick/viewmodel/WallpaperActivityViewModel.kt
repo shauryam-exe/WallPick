@@ -5,7 +5,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.code.wallpick.data.State
+import com.code.wallpick.App
+import com.code.wallpick.data.remote.State
 import com.code.wallpick.data.remote.WallpaperRepositoryImpl
 import com.code.wallpick.data.model.PhotoList
 import kotlinx.coroutines.launch
@@ -24,7 +25,7 @@ class WallpaperActivityViewModel(private val repository: WallpaperRepositoryImpl
         repository.getWallpapers(wallpaperType, page)
     }
 
-    val filesDir = "/data/data/com.code.wallpick/files/"
+    val filesDir = App.PATH
 
 
     fun saveWallpaper(folder: String, bmp: Bitmap, name: String) {

@@ -1,4 +1,4 @@
-package com.code.wallpick.data
+package com.code.wallpick.data.local
 
 import android.graphics.Bitmap
 import java.io.File

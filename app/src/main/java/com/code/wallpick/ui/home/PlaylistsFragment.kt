@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.code.wallpick.R
 import com.code.wallpick.adapter.PlaylistAdapter
-import com.code.wallpick.data.PlaylistRepositoryImpl
+import com.code.wallpick.data.local.PlaylistRepositoryImpl
 import com.code.wallpick.ui.playlist.PlaylistActivity
 import com.code.wallpick.viewmodel.PlaylistFragmentViewModel
 import com.code.wallpick.viewmodel.utils.PlaylistViewModelFactory

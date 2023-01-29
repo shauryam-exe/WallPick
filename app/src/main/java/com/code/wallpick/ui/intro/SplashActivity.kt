@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.util.TypedValue
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -13,10 +14,12 @@ import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
+import com.code.wallpick.App
 import com.code.wallpick.R
 import com.code.wallpick.service.ShakeService
 import com.code.wallpick.ui.home.HomeActivity
 import com.todo.shakeit.core.ShakeIt
+import java.io.File
 
 
 class SplashActivity : AppCompatActivity() {
@@ -39,7 +42,7 @@ class SplashActivity : AppCompatActivity() {
 
         ShakeIt.init(application)
 
-
+        initStorage()
 
         topAnimation = AnimationUtils.loadAnimation(this, R.anim.top_animation)
         bottomAnimation = AnimationUtils.loadAnimation(this, R.anim.bottom_animaiton)
@@ -69,6 +72,14 @@ class SplashActivity : AppCompatActivity() {
                 this@SplashActivity.finish()
             }
         }, splashDisplayLength)
+    }
+
+    private fun initStorage() {
+        val file = File(App.PATH)
+        if (!file.exists()) {
+            file.mkdir()
+        }
+        Log.d("File created","created at $file")
     }
 
     @ColorInt

@@ -2,7 +2,6 @@ package com.code.wallpick.data.remote
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.code.wallpick.data.State
 import com.code.wallpick.data.model.PhotoList
 
 class WallpaperRepositoryImpl(private val wallpapersService: WallpapersService): WallpaperRepository {

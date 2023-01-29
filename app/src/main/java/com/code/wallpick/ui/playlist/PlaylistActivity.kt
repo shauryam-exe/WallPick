@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.code.wallpick.App
 import com.code.wallpick.R
 import com.code.wallpick.adapter.PlaylistActivityAdapter
-import com.code.wallpick.data.PlaylistRepositoryImpl
+import com.code.wallpick.data.local.PlaylistRepositoryImpl
 import com.code.wallpick.viewmodel.PlaylistActivityViewModel
 import com.code.wallpick.viewmodel.utils.PlaylistActivityViewModelFactory
 import java.io.FileInputStream
@@ -56,7 +56,7 @@ class PlaylistActivity : AppCompatActivity(), PlaylistActivityAdapter.OnItemClic
 
         Handler(Looper.getMainLooper()).postDelayed({
             initRecyclerView()
-        }, 60)
+        }, 80)
 
         viewModel.loadPlaylist(playlist)
         viewModel.wallpapers.observe(this) {
@@ -88,15 +88,16 @@ class PlaylistActivity : AppCompatActivity(), PlaylistActivityAdapter.OnItemClic
 
     override fun onAddClick() {
         val bundle = Bundle()
+        Log.d("click","onAdd Click working")
         bundle.putString("TEXT", playlist)
         addWallpaperDialog.arguments = bundle
         addWallpaperDialog.show(supportFragmentManager, AddWallpaperDialogFragment.TAG)
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.loadPlaylist(playlist)
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        viewModel.loadPlaylist(playlist)
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.playlist_menu, menu)
