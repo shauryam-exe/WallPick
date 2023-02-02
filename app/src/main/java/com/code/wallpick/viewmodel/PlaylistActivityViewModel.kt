@@ -19,6 +19,8 @@ class PlaylistActivityViewModel(private val repository: PlaylistRepository): Vie
         Log.d("saved", result.size.toString())
         wallpapersLiveData.value?.clear()
         Log.d("saved playlist viewModel", wallpapersLiveData.value?.size.toString())
-        wallpapersLiveData.postValue(result.toCollection(ArrayList()))
+//        wallpapersLiveData.postValue(result.toCollection(ArrayList()))
+        wallpapersLiveData.value = result.toCollection(ArrayList())
+        Log.d("loaded playlist viewModel", wallpapersLiveData.value?.size.toString())
     }
 }

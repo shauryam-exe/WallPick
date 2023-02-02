@@ -61,10 +61,10 @@ class PlaylistActivityAdapter(
 
     fun updateItems(images: List<File>) {
         Log.d("playlist adapter","updateItems Called")
-//        photoList.clear()
+        photoList.clear()
 //        photoList.add(File("abc"))
         photoList.addAll(images)
-        notifyItemRangeInserted(1, images.size)
+        notifyDataSetChanged()
     }
 
 

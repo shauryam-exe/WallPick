@@ -94,10 +94,17 @@ class PlaylistActivity : AppCompatActivity(), PlaylistActivityAdapter.OnItemClic
         addWallpaperDialog.show(supportFragmentManager, AddWallpaperDialogFragment.TAG)
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//        viewModel.loadPlaylist(playlist)
-//    }
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadPlaylist(playlist)
+        Handler(Looper.getMainLooper()).postDelayed({
+            initRecyclerView()
+        }, 80)
+    }
+
+    override fun onPause() {
+        super.onPause()
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.playlist_menu, menu)
@@ -142,6 +149,7 @@ class PlaylistActivity : AppCompatActivity(), PlaylistActivityAdapter.OnItemClic
             val wallpaperManager = WallpaperManager.getInstance(this)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_SYSTEM)
+                
             } else {
                 wallpaperManager.setBitmap(bitmap)
             }

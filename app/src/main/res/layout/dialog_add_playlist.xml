@@ -11,7 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="18dp"
 
         android:backgroundTint="@color/transparent">
 
@@ -19,10 +21,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_medium"
-            android:text="Enter New Playlist Name"
-            android:textColor="@color/red"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:text="Give Your Playlist a Name"
+            android:textColor="@color/teal_700"
+            android:layout_gravity="center"
+            android:textSize="18sp"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputLayout"
@@ -33,8 +35,10 @@
                 android:id="@+id/input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="20sp"
                 android:backgroundTint="@color/transparent"
-                android:textColor="@color/red" />
+                android:textColor="@color/teal_200" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -47,7 +51,7 @@
             android:text="OK"
             android:clickable="true"
             android:layout_gravity="end"
-            android:textColor="@color/red"
+            android:textColor="?attr/text_color"
             android:backgroundTint="@color/transparent"
             android:focusable="true"
             android:background="?android:attr/selectableItemBackgroundBorderless" />
