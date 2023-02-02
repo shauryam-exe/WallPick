@@ -18,6 +18,7 @@ import com.code.wallpick.App
 import com.code.wallpick.R
 import com.code.wallpick.service.ShakeService
 import com.code.wallpick.ui.home.HomeActivity
+import com.code.wallpick.ui.login.LoginActivity
 import com.todo.shakeit.core.ShakeIt
 import java.io.File
 
@@ -68,7 +69,7 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(Intent(this@SplashActivity, OnBoardingActivity::class.java))
                 this@SplashActivity.finish()
             } else {
-                startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
+                startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
                 this@SplashActivity.finish()
             }
         }, splashDisplayLength)
