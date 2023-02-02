@@ -9,8 +9,9 @@
 
     <TextView
         android:id="@+id/signUpHeading"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:fontFamily="@font/kaushan_script"
         android:text="WallPick"
         android:textColor="@color/red"

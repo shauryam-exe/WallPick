@@ -2,6 +2,7 @@ package com.code.wallpick.data.auth
 
 import com.code.wallpick.data.auth.AuthRepository
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -10,14 +11,11 @@ import kotlin.coroutines.resumeWithException
 class AuthRepositoryImpl(private val firebaseAuth: FirebaseAuth) : AuthRepository {
     override val currentUser: FirebaseUser? = firebaseAuth.currentUser
 
-    override suspend fun login(email: String, password: String): AuthState<FirebaseUser> {
+    override suspend fun login(credential: AuthCredential): AuthState<FirebaseUser> {
         return try {
-            val result = firebaseAuth.signInWithEmailAndPassword(email,password).await()
-            if (result.user!!.isEmailVerified) {
-                AuthState.Success(result.user!!)
-            } else {
-                AuthState.Error("Email not verified")
-            }
+            val result = firebaseAuth.signInWithCredential(credential).await()
+            //val result = firebaseAuth.signInWithEmailAndPassword(email,password).await()
+            AuthState.Success(result.user!!)
         } catch (e: Exception) {
             AuthState.Failure(e)
         }

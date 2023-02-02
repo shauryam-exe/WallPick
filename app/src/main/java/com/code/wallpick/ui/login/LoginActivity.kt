@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.code.wallpick.R
 import com.code.wallpick.data.auth.AuthRepositoryImpl
+import com.code.wallpick.data.auth.AuthState
 import com.code.wallpick.ui.home.HomeActivity
 import com.code.wallpick.viewmodel.AuthViewModel
 import com.code.wallpick.viewmodel.utils.AuthViewModelFactory
@@ -35,7 +36,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     lateinit var mGoogleSignInClient: GoogleSignInClient
-    val Req_Code: Int = 123
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,19 +44,37 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         googleSignIn = findViewById(R.id.googleLoginButton)
         window.statusBarColor = getColor(R.color.dark_blue)
-//        progressBar = findViewById(R.id.progressBar)
+        progressBar = findViewById(R.id.progressBar)
 
-        if (auth.currentUser != null) {
-            startActivity(Intent(this, HomeActivity::class.java))
-            finish()
+        initLoading()
+        initGoogleSignIn()
+    }
+
+    private fun initLoading() {
+        viewModel.authState.observe(this) {
+            when(it) {
+                is AuthState.Success -> {
+                    startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                    this@LoginActivity.finish()
+                }
+                is AuthState.Loading -> {
+                    progressBar.visibility = View.VISIBLE
+                }
+                else -> {
+                    progressBar.visibility = View.INVISIBLE
+                }
+            }
         }
+    }
 
+    private fun initGoogleSignIn() {
         val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
+        mGoogleSignInClient.signOut()
 
         val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
@@ -66,35 +84,27 @@ class LoginActivity : AppCompatActivity() {
         }
 
         googleSignIn.setOnClickListener{
-            Log.d ("Login","Google button working")
             val signInIntent: Intent = mGoogleSignInClient.signInIntent
             resultLauncher.launch(signInIntent)
         }
     }
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode == Req_Code) {
-//            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-//            handleResult(task)
-//        }
-//    }
-
     private fun handleResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             if (account != null) {
-                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+                val credential = GoogleAuthProvider.getCredential(account.idToken,null)
+//                auth.signInWithCredential(credential).addOnCompleteListener {
+//                    if(it.isSuccessful) {
+//                        startActivity(Intent(this, HomeActivity::class.java))
+//                        finish()
+//                    }
+//                }
+                viewModel.login(credential)
             }
         } catch (e: ApiException) {
             Log.d("LoginActivity",e.toString())
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
         }
-    }
-
-
-    private fun checkEmail(email: String): Boolean {
-        return email.isNotBlank() && email.isNotEmpty() && Patterns.EMAIL_ADDRESS.matcher(email)
-            .matches()
     }
 }

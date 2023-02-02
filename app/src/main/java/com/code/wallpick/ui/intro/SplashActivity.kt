@@ -19,6 +19,7 @@ import com.code.wallpick.R
 import com.code.wallpick.service.ShakeService
 import com.code.wallpick.ui.home.HomeActivity
 import com.code.wallpick.ui.login.LoginActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.todo.shakeit.core.ShakeIt
 import java.io.File
 
@@ -64,13 +65,18 @@ class SplashActivity : AppCompatActivity() {
             if (isFirstTime) {
                 val editor = onBoarding.edit()
                 editor.putBoolean("firstTime",false)
-                editor.commit()
+                editor.apply()
 
                 startActivity(Intent(this@SplashActivity, OnBoardingActivity::class.java))
                 this@SplashActivity.finish()
             } else {
-                startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-                this@SplashActivity.finish()
+                if (FirebaseAuth.getInstance().currentUser != null) {
+                    startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
+                    this@SplashActivity.finish()
+                } else {
+                    startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+                    this@SplashActivity.finish()
+                }
             }
         }, splashDisplayLength)
     }

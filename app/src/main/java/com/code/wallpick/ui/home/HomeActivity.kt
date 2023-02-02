@@ -27,6 +27,7 @@ import com.code.wallpick.service.ShakeService
 import com.code.wallpick.ui.login.LoginActivity
 import com.code.wallpick.viewmodel.HomeViewModel
 import com.code.wallpick.viewmodel.utils.HomeViewModelFactory
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -95,6 +96,7 @@ class HomeActivity : AppCompatActivity(), ShakeListener {
         auth = FirebaseAuth.getInstance()
         nameText.text = auth.currentUser!!.displayName
         emailText.text = auth.currentUser!!.email
+        Log.d("HomeScreen",auth.currentUser.toString())
 
         initViewPager()
 
