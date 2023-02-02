@@ -2,6 +2,7 @@ package com.code.wallpick.ui.playlist
 
 import android.app.WallpaperManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
@@ -20,6 +21,8 @@ import com.code.wallpick.App
 import com.code.wallpick.R
 import com.code.wallpick.adapter.PlaylistActivityAdapter
 import com.code.wallpick.data.local.PlaylistRepositoryImpl
+import com.code.wallpick.service.HomeScreenReceiver
+import com.code.wallpick.service.ShakeService
 import com.code.wallpick.viewmodel.PlaylistActivityViewModel
 import com.code.wallpick.viewmodel.utils.PlaylistActivityViewModelFactory
 import java.io.FileInputStream
@@ -149,7 +152,7 @@ class PlaylistActivity : AppCompatActivity(), PlaylistActivityAdapter.OnItemClic
             val wallpaperManager = WallpaperManager.getInstance(this)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_SYSTEM)
-                
+                HomeScreenReceiver.playlistChanged = true
             } else {
                 wallpaperManager.setBitmap(bitmap)
             }

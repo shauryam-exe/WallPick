@@ -13,54 +13,36 @@ import com.code.wallpick.service.sensor.AndroidSensor
 
 class HomeScreenReceiver(val sensor: AccelerometerSensor) : BroadcastReceiver() {
     private val TAG = "ScreenLockReceiver"
-    private val SENSOR_STOP_TIME = 30000L  // 30 seconds
-    //lateinit var sensor: AccelerometerSensor
+
+    private var playlist = App.FAVOURITE
 
     companion object {
-        var isSensorRunning = false
+        var playlistChanged = false
     }
 
     override fun onReceive(context: Context, intent: Intent) {
 
         if (intent.action.equals(Intent.ACTION_USER_PRESENT)) {
-            Log.d(TAG,"Screen On Received")
-
-            isSensorRunning = true
 
             val sharedPrefs = context.getSharedPreferences(App.PREFERENCES, Context.MODE_PRIVATE)
-            val playlist = sharedPrefs.getString(App.HOME_PLAYLIST, App.FAVOURITE)!!
+            playlist = sharedPrefs.getString(App.HOME_PLAYLIST, App.FAVOURITE)!!
 
             sensor.startListening()
             sensor.setOnSensorValuesChangedListener { values ->
-                sensor.detectShake(values, playlist)
+                if(sensor.detectShake(values, playlist)) {
+                    playlist = sharedPrefs.getString(App.HOME_PLAYLIST, App.FAVOURITE)!!
+                }
+                if (playlistChanged) {
+                    playlist = sharedPrefs.getString(App.HOME_PLAYLIST, App.FAVOURITE)!!
+                    playlistChanged = false
+                }
             }
 
         }
 
         if (intent.action.equals(Intent.ACTION_SCREEN_OFF)) {
             sensor.stopListening()
-            Log.d(TAG,"Screen Lock Received")
         }
-    }
-
-    fun handler() {
-        val handler = Handler()
-        handler.postDelayed({
-            isSensorRunning = false
-
-            if (sensor.isSensorListening)
-                sensor.stopListening()
-            else
-                sensor.startListening()
-
-//            Toast.makeText(
-//                context,
-//                "Sensor Stopped Finally",
-//                Toast.LENGTH_SHORT
-//            ).show()
-            Log.d("Sensor","Sensor stopped")
-        }, SENSOR_STOP_TIME)
-
     }
 
     fun stopSensor() {

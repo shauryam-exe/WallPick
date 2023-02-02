@@ -13,7 +13,7 @@ class AccelerometerSensor(context: Context) :
     AndroidSensor(context, PackageManager.FEATURE_SENSOR_ACCELEROMETER, Sensor.TYPE_ACCELEROMETER) {
     private val SHAKE_THRESHOLD = 30
 
-    fun detectShake(values: List<Float>,playlist: String) {
+    fun detectShake(values: List<Float>,playlist: String): Boolean {
         Log.d("sensor","Detect Shake calling")
         val ax = values[0]
         val ay = values[1]
@@ -23,11 +23,7 @@ class AccelerometerSensor(context: Context) :
         if (acceleration > SHAKE_THRESHOLD) {
 
             Log.d("check sensor", "Sensor is working perfectly fine!!!")
-            Toast.makeText(
-                context,
-                "shake detected with acceleration: $acceleration",
-                Toast.LENGTH_SHORT
-            ).show()
+
 
             HomeWallpaper().changeWallpaper(context,playlist)
 
@@ -40,7 +36,9 @@ class AccelerometerSensor(context: Context) :
                     this@AccelerometerSensor.startListening()
                 }
             }.start()
+            return true
         }
+        return false
     }
 
 //    fun isAppRunning(context: Context): String? {

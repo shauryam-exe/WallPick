@@ -9,7 +9,7 @@ class LockScreenReceiver: BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
 
-        if (true) {
+        if (intent.action.equals(Intent.ACTION_SCREEN_ON)) {
 
             val sharedPrefs = context.getSharedPreferences(App.PREFERENCES, Context.MODE_PRIVATE)
             val playlist = sharedPrefs.getString(App.LOCK_PLAYLIST, App.FAVOURITE)!!
