@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.util.TypedValue
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -16,14 +17,17 @@ import androidx.viewpager2.widget.ViewPager2
 import com.code.wallpick.R
 import com.code.wallpick.adapter.OnBoardingAdapter
 import com.code.wallpick.ui.login.LoginActivity
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 class OnBoardingActivity : AppCompatActivity() {
 
-    private lateinit var viewPager : ViewPager2
-    private lateinit var dotsLayout: LinearLayout
+    private lateinit var viewPager: ViewPager2
+    private lateinit var tabLayout: TabLayout
     private lateinit var sliderAdapter: OnBoardingAdapter
-    private lateinit var dots: Array<TextView?>
-    private lateinit var letsGetStarted: Button
+    private lateinit var letsGetStarted: TextView
+    private lateinit var skipButton: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,59 +37,44 @@ class OnBoardingActivity : AppCompatActivity() {
 
         viewPager = findViewById(R.id.slider)
         letsGetStarted = findViewById(R.id.get_started_btn)
+        skipButton = findViewById(R.id.skip_btn)
 
-        dotsLayout = findViewById(R.id.dots)
-        addDots(1)
+        tabLayout = findViewById(R.id.dots)
 
-        sliderAdapter = OnBoardingAdapter()
+        sliderAdapter = OnBoardingAdapter(this)
         viewPager.adapter = sliderAdapter
 
-        viewPager.registerOnPageChangeCallback(changeListener)
-    }
-
-    private fun addDots(position: Int) {
-        dots = arrayOfNulls(2)
-        dotsLayout.removeAllViews()
-
-        for (i in dots.indices) {
-            dots[i] = TextView(this)
-            dots[i]?.text = Html.fromHtml("&#8226;")
-            dots[i]?.textSize = 35f
-            dotsLayout.addView(dots[i])
-        }
-
-        if (dots.size >= 0) {
-            dots[position]?.setTextColor(resources.getColor(R.color.red))
-        }
-    }
-
-    private var changeListener: ViewPager2.OnPageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageScrolled(
-            position: Int,
-            positionOffset: Float,
-            positionOffsetPixels: Int
-        ) {
-        }
-
-        override fun onPageSelected(position: Int) {
-            addDots(position)
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             if (position == 0) {
-                letsGetStarted.text = "Next"
-                letsGetStarted.setOnClickListener{
-                    viewPager.setCurrentItem(1,true)
-                }
-            } else if (position == 1){
-                letsGetStarted.text = "Get Started"
-                letsGetStarted.setOnClickListener{
-                    startActivity(Intent(this@OnBoardingActivity, LoginActivity::class.java))
-                    finish()
-                    Log.d("check for errors","get started button working")
+                tab.setIcon(R.drawable.selected_dot)
+
+            } else if (position == 1) {
+                tab.setIcon(R.drawable.selected_dot)
+            }
+        }.attach()
+
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                if (position == 0) {
+                    letsGetStarted.text = "Next"
+                    letsGetStarted.setOnClickListener {
+                        viewPager.setCurrentItem(position + 1, true)
+                    }
+                } else if (position == 1) {
+                    letsGetStarted.text = "Get Started"
+                    letsGetStarted.setOnClickListener {
+                        startActivity(Intent(this@OnBoardingActivity,LoginActivity::class.java))
+                    }
                 }
             }
-        }
+        })
 
-        override fun onPageScrollStateChanged(state: Int) {}
+        skipButton.setOnClickListener {
+            startActivity(Intent(this@OnBoardingActivity,LoginActivity::class.java))
+        }
     }
+
 
     @ColorInt
     fun Context.getColorFromAttr(

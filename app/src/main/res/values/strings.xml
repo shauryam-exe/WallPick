@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">WallPick</string>
-    <string name="onBoarding1body">Get curated and\ndiverse collection of\nwallpapers that matches \nyour mood</string>
+    <string name="onBoarding1body">Get curated and diverse collection\nof wallpapers that matches\nyour mood</string>
     <string name="onBoarding1Heading">Curated Wallpapers</string>
     <string name="onBoarding2Body">Shake your phone to\nchange wallpapers\non the go</string>
     <string name="nav_open">open</string>

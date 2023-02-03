@@ -74,7 +74,7 @@ class SplashActivity : AppCompatActivity() {
                     startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
                     this@SplashActivity.finish()
                 } else {
-                    startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+                    startActivity(Intent(this@SplashActivity, OnBoardingActivity::class.java))
                     this@SplashActivity.finish()
                 }
             }
