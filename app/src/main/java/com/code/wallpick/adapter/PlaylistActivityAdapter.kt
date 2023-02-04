@@ -28,10 +28,16 @@ class PlaylistActivityAdapter(
     var photoList: ArrayList<File> = ArrayList()//arrayListOf(File(""))
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        Log.d("playlist adapter","onCreate Called")
+        Log.d("playlist adapter", "onCreate Called")
         val inflater = LayoutInflater.from(parent.context)
         if (viewType == 0) {
-            return FirstItemViewHolder(inflater.inflate(R.layout.item_playlist_activity,parent,false))
+            return FirstItemViewHolder(
+                inflater.inflate(
+                    R.layout.item_playlist_activity,
+                    parent,
+                    false
+                )
+            )
         }
         return PlaylistActivityViewHolder(
             LayoutInflater.from(parent.context)
@@ -45,12 +51,12 @@ class PlaylistActivityAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder) {
+        when (holder) {
             is FirstItemViewHolder -> {
                 holder.setImage()
             }
             is PlaylistActivityViewHolder -> {
-                holder.setImage(photoList[position-1])
+                holder.setImage(photoList[position - 1],position)
             }
         }
     }
@@ -60,11 +66,20 @@ class PlaylistActivityAdapter(
     }
 
     fun updateItems(images: List<File>) {
-        Log.d("playlist adapter","updateItems Called")
+        Log.d("playlist adapter", "updateItems Called")
         photoList.clear()
 //        photoList.add(File("abc"))
         photoList.addAll(images)
         notifyDataSetChanged()
+    }
+
+    fun removeItem(position: Int) {
+        // Remove the item from the data source
+        photoList.removeAt(position)
+        // Notify the adapter of the change
+        notifyItemRemoved(position)
+        notifyDataSetChanged()
+        notifyItemRangeChanged(position,photoList.size)
     }
 
 
@@ -72,35 +87,25 @@ class PlaylistActivityAdapter(
         val imageView = itemView.findViewById<ImageView>(R.id.image_view)
         val cardView = itemView.findViewById<CardView>(R.id.card_view)
 
-        fun setImage(file: File) {
+        fun setImage(file: File, position: Int) {
 
-//            imageView.setBackgroundColor(Color.parseColor(photo.avg_color))
-//            val colorDrawable = ColorDrawable(Color.parseColor(photo.avg_color))
-//            colorDrawable.setBounds(0, 0, photo.width, photo.height)
-
-//            if (position == 0) {
-//                //This is causing Problems in Layout
-//                cardView.elevation = 0f
-//                Glide.with(context)
-//                    .load(R.drawable.add_icon_image)
-//                    .fitCenter()
-//                    .into(imageView)
-//                itemView.setOnClickListener {
-//                    listener.onAddClick()
-//                }
-//            } else {
             Glide.with(imageView)
                 .load(file)
                 //.placeholder(colorDrawable)
                 .into(imageView)
-                itemView.setOnClickListener {
-                    listener.onClick()
-                }
+            itemView.setOnClickListener {
+                listener.onClick()
+            }
+
+            itemView.setOnLongClickListener {
+                listener.onLongClick(file,position-1)
+                true
+            }
 
         }
     }
 
-    inner class FirstItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class FirstItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView = itemView.findViewById<ImageView>(R.id.image_view)
         val cardView = itemView.findViewById<CardView>(R.id.card_view)
 
@@ -117,6 +122,7 @@ class PlaylistActivityAdapter(
 
     interface OnItemClickListener {
         fun onClick()
+        fun onLongClick(file: File, position: Int)
         fun onAddClick()
     }
 }

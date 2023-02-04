@@ -10,4 +10,6 @@ interface PlaylistRepository {
     fun listOfPlaylists(): Array<File>
 
     fun saveWallpaper(folder: String, bmp: Bitmap, name: String, filesDir: File)
+
+    fun deleteImage(file: File)
 }

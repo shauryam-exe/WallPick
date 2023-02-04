@@ -12,6 +12,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
@@ -25,6 +27,7 @@ import com.code.wallpick.service.HomeScreenReceiver
 import com.code.wallpick.service.ShakeService
 import com.code.wallpick.viewmodel.PlaylistActivityViewModel
 import com.code.wallpick.viewmodel.utils.PlaylistActivityViewModelFactory
+import java.io.File
 import java.io.FileInputStream
 
 class PlaylistActivity : AppCompatActivity(), PlaylistActivityAdapter.OnItemClickListener {
@@ -57,9 +60,9 @@ class PlaylistActivity : AppCompatActivity(), PlaylistActivityAdapter.OnItemClic
         initRecyclerView()
         initViewModel()
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            initRecyclerView()
-        }, 80)
+//        Handler(Looper.getMainLooper()).postDelayed({
+//            initRecyclerView()
+//        }, 80)
 
         viewModel.loadPlaylist(playlist)
         viewModel.wallpapers.observe(this) {
@@ -83,6 +86,22 @@ class PlaylistActivity : AppCompatActivity(), PlaylistActivityAdapter.OnItemClic
             this,
             PlaylistActivityViewModelFactory(repo)
         ).get(PlaylistActivityViewModel::class.java)
+    }
+
+    override fun onLongClick(file: File, position: Int) {
+        val builder = AlertDialog.Builder(this)
+        Log.d("PlaylistAdapter","$position clicked")
+        builder.setMessage("Are you sure you want to delete this item?")
+                .setPositiveButton("Yes") { dialog, id ->
+                    adapter.removeItem(position)
+                    viewModel.deleteImage(file)
+                    Toast.makeText(this, "Wallpaper Removed ", Toast.LENGTH_SHORT).show()
+                    dialog.dismiss()
+                }
+                .setNegativeButton("No") { dialog, id ->
+                    dialog.dismiss()
+                }
+            builder.create().show()
     }
 
     override fun onClick() {
@@ -117,9 +136,11 @@ class PlaylistActivity : AppCompatActivity(), PlaylistActivityAdapter.OnItemClic
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.home_wallpaper -> {
+                Toast.makeText(this,"Home Wallpaper Changed",Toast.LENGTH_SHORT).show()
                 setAsHomeWallpaper()
             }
             R.id.lock_wallpaper -> {
+                Toast.makeText(this,"Lock Wallpaper Changed",Toast.LENGTH_SHORT).show()
                 setAsLockWallpaper()
             }
         }

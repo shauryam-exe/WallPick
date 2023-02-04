@@ -16,11 +16,11 @@ class PlaylistActivityViewModel(private val repository: PlaylistRepository): Vie
 
     fun loadPlaylist(fileName: String) {
         val result = repository.loadPlaylist(fileName)
-        Log.d("saved", result.size.toString())
         wallpapersLiveData.value?.clear()
-        Log.d("saved playlist viewModel", wallpapersLiveData.value?.size.toString())
-//        wallpapersLiveData.postValue(result.toCollection(ArrayList()))
         wallpapersLiveData.value = result.toCollection(ArrayList())
-        Log.d("loaded playlist viewModel", wallpapersLiveData.value?.size.toString())
+    }
+
+    fun deleteImage(file: File) {
+        repository.deleteImage(file)
     }
 }
