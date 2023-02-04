@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,11 +19,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.code.wallpick.R
 import com.code.wallpick.adapter.PlaylistAdapter
 import com.code.wallpick.data.local.PlaylistRepositoryImpl
+import com.code.wallpick.data.model.Playlist
 import com.code.wallpick.ui.playlist.PlaylistActivity
 import com.code.wallpick.viewmodel.PlaylistFragmentViewModel
 import com.code.wallpick.viewmodel.utils.PlaylistViewModelFactory
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.textfield.TextInputLayout
+import java.io.File
 
 
 class PlaylistsFragment : Fragment(), PlaylistAdapter.OnItemClickListener {
@@ -138,6 +142,23 @@ class PlaylistsFragment : Fragment(), PlaylistAdapter.OnItemClickListener {
         val intent = Intent(context, PlaylistActivity::class.java)
         intent.putExtra("file",fileName)
         startActivity(intent)
+    }
+
+    override fun onLongClick(playlist: Playlist, position: Int) {
+        val builder = AlertDialog.Builder(requireContext())
+        Log.d("PlaylistAdapter",playlist.path)
+        val file = File(playlist.path)
+        builder.setMessage("Are you sure you want to delete this item?")
+            .setPositiveButton("Yes") { dialog, id ->
+                adapter.removeItem(position)
+                viewModel.deleteImage(file)
+                Toast.makeText(requireContext(), "Wallpaper Removed ", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }
+            .setNegativeButton("No") { dialog, id ->
+                dialog.dismiss()
+            }
+        builder.create().show()
     }
 
     override fun onResume() {

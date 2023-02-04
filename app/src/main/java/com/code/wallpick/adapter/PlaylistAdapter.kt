@@ -1,7 +1,6 @@
 package com.code.wallpick.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +41,14 @@ class PlaylistAdapter(val context: Context, val clickListener: OnItemClickListen
         notifyDataSetChanged()
     }
 
+    fun removeItem(position: Int) {
+        // Remove the item from the data source
+        playlists.removeAt(position)
+        // Notify the adapter of the change
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position,playlists.size)
+    }
+
     inner class PlaylistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView = itemView.findViewById<ImageView>(R.id.playlist_item_image)
         val blurView = itemView.findViewById<BlurView>(R.id.playlist_item_blur)
@@ -64,11 +71,18 @@ class PlaylistAdapter(val context: Context, val clickListener: OnItemClickListen
             itemView.setOnClickListener {
                 clickListener.onClick(playlist.name)
             }
+
+            if (position != 0)
+            itemView.setOnLongClickListener {
+                clickListener.onLongClick(playlist,position)
+                true
+            }
         }
     }
 
     interface OnItemClickListener {
         fun onClick(filePath: String)
+        fun onLongClick(playlist: Playlist, position: Int)
     }
 
 }

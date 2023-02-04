@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.code.wallpick.data.local.PlaylistRepository
 import com.code.wallpick.data.model.Playlist
 import java.io.File
+import kotlin.coroutines.coroutineContext
 
 class PlaylistFragmentViewModel(private val repository: PlaylistRepository): ViewModel() {
 
@@ -24,13 +25,17 @@ class PlaylistFragmentViewModel(private val repository: PlaylistRepository): Vie
     }
 
     private fun getImagePath(file: String): String {
-        try {
+        return try {
             val folder = File(file)
             val image = folder.listFiles()?.get(0)?.path
-            return image ?: ""
+            image ?: ""
         } catch (e: ArrayIndexOutOfBoundsException) {
             Log.d("Playlist View Model","$file does not have any image")
-            return ""
+            ""
         }
+    }
+
+    fun deleteImage(file: File) {
+        val bool = file.deleteRecursively()
     }
 }

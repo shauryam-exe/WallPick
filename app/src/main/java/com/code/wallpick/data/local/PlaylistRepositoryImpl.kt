@@ -35,9 +35,6 @@ class PlaylistRepositoryImpl : PlaylistRepository {
         }
     }
 
-    override fun deleteImage(file: File) {
-        file.delete()
-    }
 
     override fun loadPlaylist(playlistName: String): Array<File> {
         val path = "$dir$playlistName/"

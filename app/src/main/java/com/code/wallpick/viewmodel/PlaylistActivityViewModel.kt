@@ -21,6 +21,6 @@ class PlaylistActivityViewModel(private val repository: PlaylistRepository): Vie
     }
 
     fun deleteImage(file: File) {
-        repository.deleteImage(file)
+        file.delete()
     }
 }
