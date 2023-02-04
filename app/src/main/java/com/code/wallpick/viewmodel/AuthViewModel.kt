@@ -19,4 +19,10 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
         val result = repository.login(credential)
         authState.value = result
     }
+
+    fun loginAnonymous() = viewModelScope.launch {
+        authState.value = AuthState.Loading
+        val result = repository.loginAnonymous()
+        authState.value = result
+    }
 }

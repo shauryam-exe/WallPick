@@ -31,6 +31,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var progressBar: ProgressBar
     private lateinit var googleSignIn: CardView
+    private lateinit var anonymousLogin: CardView
+
     private val viewModel by viewModels<AuthViewModel> {
         AuthViewModelFactory(AuthRepositoryImpl(FirebaseAuth.getInstance()))
     }
@@ -43,16 +45,18 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         googleSignIn = findViewById(R.id.googleLoginButton)
+        anonymousLogin = findViewById(R.id.facebookLoginButton)
         window.statusBarColor = getColor(R.color.dark_blue)
         progressBar = findViewById(R.id.progressBar)
 
         initLoading()
+        initAnonymousLogin()
         initGoogleSignIn()
     }
 
     private fun initLoading() {
         viewModel.authState.observe(this) {
-            when(it) {
+            when (it) {
                 is AuthState.Success -> {
                     startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                     this@LoginActivity.finish()
@@ -67,6 +71,14 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    val TAG = "LoginAdapter"
+
+    private fun initAnonymousLogin() {
+        anonymousLogin.setOnClickListener {
+            viewModel.loginAnonymous()
+        }
+    }
+
     private fun initGoogleSignIn() {
         val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -76,14 +88,15 @@ class LoginActivity : AppCompatActivity() {
         mGoogleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
         mGoogleSignInClient.signOut()
 
-        val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
-                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-                handleResult(task)
+        val resultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == RESULT_OK) {
+                    val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                    handleResult(task)
+                }
             }
-        }
 
-        googleSignIn.setOnClickListener{
+        googleSignIn.setOnClickListener {
             val signInIntent: Intent = mGoogleSignInClient.signInIntent
             resultLauncher.launch(signInIntent)
         }
@@ -93,7 +106,7 @@ class LoginActivity : AppCompatActivity() {
         try {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             if (account != null) {
-                val credential = GoogleAuthProvider.getCredential(account.idToken,null)
+                val credential = GoogleAuthProvider.getCredential(account.idToken, null)
 //                auth.signInWithCredential(credential).addOnCompleteListener {
 //                    if(it.isSuccessful) {
 //                        startActivity(Intent(this, HomeActivity::class.java))
@@ -103,7 +116,7 @@ class LoginActivity : AppCompatActivity() {
                 viewModel.login(credential)
             }
         } catch (e: ApiException) {
-            Log.d("LoginActivity",e.toString())
+            Log.d("LoginActivity", e.toString())
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
         }
     }
