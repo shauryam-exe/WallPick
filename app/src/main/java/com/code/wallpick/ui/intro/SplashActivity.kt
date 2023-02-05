@@ -67,6 +67,9 @@ class SplashActivity : AppCompatActivity() {
                 editor.putBoolean("firstTime",false)
                 editor.apply()
 
+                val file = File(App.PATH,App.FAVOURITE)
+                file.mkdir()
+
                 startActivity(Intent(this@SplashActivity, OnBoardingActivity::class.java))
                 this@SplashActivity.finish()
             } else {

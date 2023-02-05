@@ -12,7 +12,7 @@ class App: Application() {
         const val PREFERENCES = "settings"
         const val HOME_PLAYLIST = "homePlaylist"
         const val LOCK_PLAYLIST = "lockPlaylist"
-        const val FAVOURITE = "Favs"
+        const val FAVOURITE = "Favourites"
 
         @SuppressLint("SdCardPath")
         const val PATH = "/data/data/com.code.wallpick/files/saved/"
