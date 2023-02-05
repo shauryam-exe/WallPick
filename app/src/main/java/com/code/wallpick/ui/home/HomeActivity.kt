@@ -32,12 +32,11 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
-import com.todo.shakeit.core.ShakeListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity(), ShakeListener {
+class HomeActivity : AppCompatActivity() {
 
     private lateinit var toolbar: Toolbar
 
@@ -182,10 +181,6 @@ class HomeActivity : AppCompatActivity(), ShakeListener {
         } else super.onOptionsItemSelected(item)
     }
 
-    override fun onShake() {
-        Toast.makeText(this,"Shake Detected", Toast.LENGTH_SHORT).show()
-        Log.d("Shake","Shake Detected")
-    }
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
 //        menuInflater.inflate(R.menu.home_menu, menu)

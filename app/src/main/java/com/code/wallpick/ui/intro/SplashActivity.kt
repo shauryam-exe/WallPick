@@ -20,7 +20,6 @@ import com.code.wallpick.service.ShakeService
 import com.code.wallpick.ui.home.HomeActivity
 import com.code.wallpick.ui.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.todo.shakeit.core.ShakeIt
 import java.io.File
 
 
@@ -42,7 +41,6 @@ class SplashActivity : AppCompatActivity() {
         window.statusBarColor = getColorFromAttr(R.attr.background_color)
 
 
-        ShakeIt.init(application)
 
         initStorage()
 
