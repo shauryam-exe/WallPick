@@ -75,7 +75,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initAnonymousLogin() {
         anonymousLogin.setOnClickListener {
-            viewModel.loginAnonymous()
+            //Will be implemented later
+            Toast.makeText(this, "Error Authenticating with Meta", Toast.LENGTH_SHORT).show()
         }
     }
 

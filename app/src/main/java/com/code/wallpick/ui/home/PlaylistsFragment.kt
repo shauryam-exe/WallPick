@@ -138,9 +138,9 @@ class PlaylistsFragment : Fragment(), PlaylistAdapter.OnItemClickListener {
         return false
     }
 
-    override fun onClick(fileName: String) {
+    override fun onClick(filePath: String) {
         val intent = Intent(context, PlaylistActivity::class.java)
-        intent.putExtra("file",fileName)
+        intent.putExtra("file",filePath)
         startActivity(intent)
     }
 
@@ -152,7 +152,7 @@ class PlaylistsFragment : Fragment(), PlaylistAdapter.OnItemClickListener {
             .setPositiveButton("Yes") { dialog, id ->
                 adapter.removeItem(position)
                 viewModel.deleteImage(file)
-                Toast.makeText(requireContext(), "Wallpaper Removed ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Playlist Removed ", Toast.LENGTH_SHORT).show()
                 dialog.dismiss()
             }
             .setNegativeButton("No") { dialog, id ->

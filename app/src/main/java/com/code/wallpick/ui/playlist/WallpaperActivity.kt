@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.LinearInterpolator
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.bumptech.glide.Glide
@@ -37,12 +38,11 @@ class WallpaperActivity : AppCompatActivity(), CardStackListener {
         setContentView(R.layout.activity_wallpaper)
         wallpaperType = intent.getStringExtra("collection")!!
         playlistName = intent.getStringExtra("playlist")!!
+        window.statusBarColor = getColor(R.color.dark_blue)
 
         initStackView()
-        Log.d("wallpaper",wallpaperType)
         initViewModel()
         viewModel.getWallpapers(wallpaperType,page++)
-
     }
 
     private fun initStackView() {
@@ -92,6 +92,7 @@ class WallpaperActivity : AppCompatActivity(), CardStackListener {
                     ) {
                         bmp = resource
                         viewModel.saveWallpaper(playlistName,bmp,id)
+                        Toast.makeText(this@WallpaperActivity, "Wallpaper Added to Playlist", Toast.LENGTH_SHORT).show()
                     }
                     override fun onLoadCleared(placeholder: Drawable?) {
 
