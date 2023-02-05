@@ -64,8 +64,13 @@ class LoginActivity : AppCompatActivity() {
                 is AuthState.Loading -> {
                     progressBar.visibility = View.VISIBLE
                 }
+                is AuthState.Failure -> {
+                   progressBar.visibility = View.INVISIBLE
+                    Toast.makeText(this@LoginActivity, it.exception.message, Toast.LENGTH_SHORT).show()
+                }
                 else -> {
                     progressBar.visibility = View.INVISIBLE
+                    Toast.makeText(this@LoginActivity, "Something went wrong", Toast.LENGTH_SHORT).show()
                 }
             }
         }

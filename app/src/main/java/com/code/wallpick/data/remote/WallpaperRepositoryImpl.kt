@@ -27,7 +27,7 @@ class WallpaperRepositoryImpl(private val wallpapersService: WallpapersService):
         stateLiveData.postValue(State.Loading)
         val result = wallpapersService
             .getWallpaperList(wallpaperType,
-                "portrait",page,15)
+                "portrait",page,50)
         if (result.body() != null) {
             wallpaperLiveData.postValue(result.body())
             stateLiveData.postValue(State.Success)

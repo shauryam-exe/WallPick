@@ -76,19 +76,19 @@ class AddWallpaperDialogFragment : DialogFragment() {
     private fun initCardClickListener() {
 
         spaceCard.setOnClickListener {
-            selectedCollection = "space"
+            selectedCollection = arrayOf("galaxy","universe").random()
             cardSelected(it as CardView)
         }
         amoledCard.setOnClickListener {
-            selectedCollection = "black amoled"
+            selectedCollection = "black background"
             cardSelected(it as CardView)
         }
         animeCard.setOnClickListener {
-            selectedCollection = "anime"
+            selectedCollection = "japan" //arrayOf("japan","tokyo night").random()
             cardSelected(it as CardView)
         }
         carsCard.setOnClickListener {
-            selectedCollection = "cars"
+            selectedCollection = arrayOf("sports car","luxury car","cars").random()
             cardSelected(it as CardView)
         }
     }

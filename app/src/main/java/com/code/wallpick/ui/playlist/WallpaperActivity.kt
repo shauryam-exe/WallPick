@@ -29,7 +29,7 @@ class WallpaperActivity : AppCompatActivity(), CardStackListener {
     private lateinit var adapter: WallpaperStackAdapter
     private lateinit var layoutManager: CardStackLayoutManager
 
-    private var page = (0..50).random();
+    private var page = (0..10).random();
     private lateinit var wallpaperType: String
     private lateinit var playlistName: String
 

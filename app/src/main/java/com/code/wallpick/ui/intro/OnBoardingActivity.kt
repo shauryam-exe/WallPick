@@ -38,9 +38,16 @@ class OnBoardingActivity : AppCompatActivity() {
         viewPager = findViewById(R.id.slider)
         letsGetStarted = findViewById(R.id.get_started_btn)
         skipButton = findViewById(R.id.skip_btn)
-
         tabLayout = findViewById(R.id.dots)
 
+        initViewPager()
+
+        skipButton.setOnClickListener {
+            startActivity(Intent(this@OnBoardingActivity,LoginActivity::class.java))
+        }
+    }
+
+    private fun initViewPager() {
         sliderAdapter = OnBoardingAdapter(this)
         viewPager.adapter = sliderAdapter
 
@@ -69,10 +76,6 @@ class OnBoardingActivity : AppCompatActivity() {
                 }
             }
         })
-
-        skipButton.setOnClickListener {
-            startActivity(Intent(this@OnBoardingActivity,LoginActivity::class.java))
-        }
     }
 
 

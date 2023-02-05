@@ -96,6 +96,7 @@ class PlaylistActivity : AppCompatActivity(), PlaylistActivityAdapter.OnItemClic
                     adapter.removeItem(position)
                     viewModel.deleteImage(file)
                     Toast.makeText(this, "Wallpaper Removed ", Toast.LENGTH_SHORT).show()
+                    initRecyclerView()
                     dialog.dismiss()
                 }
                 .setNegativeButton("No") { dialog, id ->
