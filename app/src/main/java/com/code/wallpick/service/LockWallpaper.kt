@@ -24,21 +24,20 @@ class LockWallpaper {
 
         val child: String
 
-        for (s in files) {
-            Log.d("Reads",s.path)
-        }
-
-        if (LockWallpaper.i < files.size) {
-            child = files!![LockWallpaper.i++].path
-        } else {
-            LockWallpaper.i = 0
-            child = files!![LockWallpaper.i++].path
-        }
 
         try {
+            if (files == null) return
+
+
+            if (i < files.size) {
+                child = files[i++].path
+            } else {
+                i = 0
+                child = files[i++].path
+            }
+
             val file = File(child)
             val bitmap = BitmapFactory.decodeStream(FileInputStream(file))
-            Log.d("Read",child)
 
             val wallpaperManager = WallpaperManager.getInstance(context)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -47,7 +46,6 @@ class LockWallpaper {
                 wallpaperManager.setBitmap(bitmap)
             }
 
-            Log.d("Read", "File Found")
         } catch (e: FileNotFoundException) {
             e.printStackTrace()
         }

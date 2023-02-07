@@ -138,7 +138,7 @@ class TrendingFragment : Fragment(), TrendingAdapter.OnItemClickListener {
 
     override fun onDoubleClick(bmp: Bitmap, photo: Photo): Boolean {
         val dir = File(App.PATH)
-        val result = viewModel.saveImage("Favs", bmp, photo.id.toString(), dir)
+        val result = viewModel.saveImage(App.FAVOURITE, bmp, photo.id.toString(), dir)
         return result
     }
 

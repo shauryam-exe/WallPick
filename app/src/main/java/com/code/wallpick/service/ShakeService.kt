@@ -90,6 +90,10 @@ class ShakeService : Service() {
                 startService(restart)
             }
         } else {
+            Log.d("Service","Service Destroyed")
+            val edit = sharedPrefs.edit()
+            edit.putBoolean(App.SHAKE_SERVICE,false)
+            edit.apply()
             unregisterReceiver(lockScreenReceiver)
             unregisterReceiver(homeScreenReceiver)
             homeScreenReceiver.stopSensor()
