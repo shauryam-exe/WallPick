@@ -51,7 +51,7 @@ class PlaylistRepositoryImpl : PlaylistRepository {
     override fun listOfPlaylists(): Array<File> {
         val path = dir
         val playlists = File(path).listFiles()
-        return playlists!!
+        return playlists
     }
 
 

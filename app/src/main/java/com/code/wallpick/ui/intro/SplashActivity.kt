@@ -1,7 +1,9 @@
 package com.code.wallpick.ui.intro
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -11,9 +13,12 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.code.wallpick.App
 import com.code.wallpick.R
 import com.code.wallpick.service.ShakeService
@@ -55,6 +60,11 @@ class SplashActivity : AppCompatActivity() {
         head.animation = bottomAnimation
         body.animation = bottomAnimation
 
+        navigate()
+    }
+
+    private fun navigate() {
+
         Handler().postDelayed({
 
             val onBoarding = getSharedPreferences("onBoarding",MODE_PRIVATE)
@@ -64,9 +74,6 @@ class SplashActivity : AppCompatActivity() {
                 val editor = onBoarding.edit()
                 editor.putBoolean("firstTime",false)
                 editor.apply()
-
-                val file = File(App.PATH,App.FAVOURITE)
-                file.mkdir()
 
                 startActivity(Intent(this@SplashActivity, OnBoardingActivity::class.java))
                 this@SplashActivity.finish()
@@ -82,12 +89,18 @@ class SplashActivity : AppCompatActivity() {
         }, splashDisplayLength)
     }
 
+
     private fun initStorage() {
+        val dir = File("/data/data/com.code.wallpick/files")
+        dir.mkdir()
+
         val file = File(App.PATH)
         if (!file.exists()) {
             file.mkdir()
         }
-        Log.d("File created","created at $file")
+
+        val child = File(App.PATH,App.FAVOURITE)
+        child.mkdir()
     }
 
     @ColorInt

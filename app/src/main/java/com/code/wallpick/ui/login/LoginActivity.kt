@@ -3,7 +3,6 @@ package com.code.wallpick.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.util.Patterns
 import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,7 +21,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.*
 
 
@@ -31,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var progressBar: ProgressBar
     private lateinit var googleSignIn: CardView
-    private lateinit var anonymousLogin: CardView
+    private lateinit var facebookLogIn: CardView
 
     private val viewModel by viewModels<AuthViewModel> {
         AuthViewModelFactory(AuthRepositoryImpl(FirebaseAuth.getInstance()))
@@ -45,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
         googleSignIn = findViewById(R.id.googleLoginButton)
-        anonymousLogin = findViewById(R.id.facebookLoginButton)
+        facebookLogIn = findViewById(R.id.facebookLoginButton)
         window.statusBarColor = getColor(R.color.dark_blue)
         progressBar = findViewById(R.id.progressBar)
 
@@ -79,8 +77,9 @@ class LoginActivity : AppCompatActivity() {
     val TAG = "LoginAdapter"
 
     private fun initAnonymousLogin() {
-        anonymousLogin.setOnClickListener {
+        facebookLogIn.setOnClickListener {
             //Will be implemented later
+            //viewModel.loginAnonymous()
             Toast.makeText(this, "Error Authenticating with Meta", Toast.LENGTH_SHORT).show()
         }
     }
