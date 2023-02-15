@@ -112,12 +112,6 @@ class LoginActivity : AppCompatActivity() {
             val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             if (account != null) {
                 val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-//                auth.signInWithCredential(credential).addOnCompleteListener {
-//                    if(it.isSuccessful) {
-//                        startActivity(Intent(this, HomeActivity::class.java))
-//                        finish()
-//                    }
-//                }
                 viewModel.login(credential)
             }
         } catch (e: ApiException) {

@@ -35,7 +35,7 @@
         android:gravity="center"
         android:layout_marginTop="30dp"
         android:fontFamily="@font/inter_medium"
-        android:textSize="36sp"
+        android:textSize="30sp"
         android:textColor="?attr/text_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/introScreen2Image"

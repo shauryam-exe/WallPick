@@ -150,7 +150,6 @@ class HomeActivity : AppCompatActivity() {
                     }
                 }
             }
-            drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
     }

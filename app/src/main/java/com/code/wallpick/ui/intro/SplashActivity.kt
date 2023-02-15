@@ -67,10 +67,12 @@ class SplashActivity : AppCompatActivity() {
 
         Handler().postDelayed({
 
-            val onBoarding = getSharedPreferences("onBoarding",MODE_PRIVATE)
-            val isFirstTime = onBoarding.getBoolean("firstTime",true)
+            val onBoarding = getSharedPreferences(App.PREFERENCES,MODE_PRIVATE)
+            val isFirstTime = onBoarding.getBoolean("firstTime",false)
 
-            if (isFirstTime) {
+            Log.d("Splashing",isFirstTime.toString())
+
+            if (!isFirstTime) {
                 val editor = onBoarding.edit()
                 editor.putBoolean("firstTime",false)
                 editor.apply()

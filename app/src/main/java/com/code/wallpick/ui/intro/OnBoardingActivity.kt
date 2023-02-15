@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import androidx.viewpager2.widget.ViewPager2
+import com.code.wallpick.App
 import com.code.wallpick.R
 import com.code.wallpick.adapter.OnBoardingAdapter
 import com.code.wallpick.ui.login.LoginActivity
@@ -40,10 +41,16 @@ class OnBoardingActivity : AppCompatActivity() {
         skipButton = findViewById(R.id.skip_btn)
         tabLayout = findViewById(R.id.dots)
 
+        val sharedPrefs = getSharedPreferences(App.PREFERENCES,Context.MODE_PRIVATE)
+        val edit = sharedPrefs.edit()
+        edit.putBoolean("firstTime",true)
+        edit.apply()
+
         initViewPager()
 
         skipButton.setOnClickListener {
             startActivity(Intent(this@OnBoardingActivity,LoginActivity::class.java))
+            finish()
         }
     }
 
@@ -72,6 +79,7 @@ class OnBoardingActivity : AppCompatActivity() {
                     letsGetStarted.text = "Get Started"
                     letsGetStarted.setOnClickListener {
                         startActivity(Intent(this@OnBoardingActivity,LoginActivity::class.java))
+                        finish()
                     }
                 }
             }
